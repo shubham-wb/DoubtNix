@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const LessonSchema = new mongoose.Schema({
   title: String,
   content: String,
   resource_url: String,
 });
+
 const Lesson = mongoose.model("Lesson", LessonSchema);
 
 const CourseSchema = new mongoose.Schema({
@@ -41,4 +42,5 @@ const CourseSchema = new mongoose.Schema({
   lessons: [LessonSchema],
 });
 
-export default mongoose.model("Course", CourseSchema);
+const Course = mongoose.model("Course", CourseSchema);
+module.exports = Course;
