@@ -1,0 +1,70 @@
+.f-signup-container {
+  height: 90%;
+  width: 100%;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.f-signup-wrapper-container {
+  background: white;
+  height: 87%;
+  width: 70%;
+  box-shadow: 5px 6px 21px 0px black;
+  display: flex;
+  flex-direction: row;
+  height: 87%;
+  width: 60%;
+  box-shadow: 5px 6px 21px 0px black;
+}
+
+.f-signup-description {
+  height: 100%;
+  width: 54%;
+  background: orange;
+}
+
+.f-signup-form {
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 46%;
+  background: #80808042;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-signup-form form {
+  align-items: center;
+  margin-top: 20px;
+
+  /* justify-content: center; */
+  height: 88%;
+  width: 87%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.f-signup-form input {
+  height: 7%;
+  padding-left: 20px;
+  margin: 7px;
+  width: 80%;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 12px;
+  border: solid 2px white;
+  width: 65%;
+  margin-top: 32px;
+  background: black;
+  color: white;
+  padding: 11px;
+}
+
+hr {
+  width: 90%;
+  margin-top: 20px;
+}

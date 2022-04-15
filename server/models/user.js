@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-const multer = require("multer");
-var crypto = require("crypto");
+
 const userSchema = mongoose.Schema({
   email: {
-    type: string,
+    type: String,
     required: [true, "can't be blank"],
     match: [/\S+@\S+\.\S+/, "is invalid"],
     unique: "Email already exists",
@@ -26,7 +25,7 @@ const userSchema = mongoose.Schema({
     minLength: 8,
   },
   name: {
-    type: string,
+    type: String,
     require: true,
   },
   role: {
@@ -41,16 +40,8 @@ const userSchema = mongoose.Schema({
   },
 });
 
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", AVATAR_PATH));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-UserSchema.virtual("password")
+userSchema
+  .virtual("password")
   .set(function (password) {
     this._password = password;
     this.salt = this.makeSalt();
@@ -60,7 +51,7 @@ UserSchema.virtual("password")
     return this._password;
   });
 
-UserSchema.methods = {
+userSchema.methods = {
   authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashed_password;
   },
@@ -79,12 +70,6 @@ UserSchema.methods = {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
-
-// static methods
-userSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "avatar"
-);
-userSchema.statics.avatarPath = AVATAR_PATH;
 
 const User = mongoose.model("userSchema", userSchema);
 
