@@ -21,11 +21,24 @@ function FacultySignUp() {
         [name]: value, // update the value of specific key
       },
     }));
-    console.log(facultyDetails);
   }
 
   const handleSubmit = (event) => {
-    console.log(facultyDetails);
+    let post = JSON.stringify(facultyDetails.facultyDetails);
+    console.log(post);
+    const url = "http://localhost:8000/signup/faculty";
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.send(post);
+
+    xhr.onload = function () {
+      if (xhr.status === 201) {
+        console.log("Post successfully created!");
+      }
+    };
+
     event.preventDefault();
   };
 

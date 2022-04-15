@@ -1,17 +1,15 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
-const multer = require("multer");
-var crypto = require("crypto");
 const teacherSchema = mongoose.Schema({
   email: {
-    type: string,
+    type: String,
     required: [true, "can't be blank"],
     match: [/\S+@\S+\.\S+/, "is invalid"],
     unique: "Email already exists",
   },
 
   subject: {
-    type: string,
+    type: String,
     required: true,
   },
   username: {
@@ -30,27 +28,13 @@ const teacherSchema = mongoose.Schema({
     minLength: 8,
   },
   name: {
-    type: string,
+    type: String,
     require: true,
   },
   role: {
     type: String,
     enum: ["Admin", "Teacher"],
     defaultt: "Teacher",
-  },
-  avatar: {
-    type: String,
-    default:
-      "https://emedia1.nhs.wales/HEIW2/cache/file/F4C33EF0-69EE-4445-94018B01ADCF6FD4_medium.png",
-  },
-});
-
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", AVATAR_PATH));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
   },
 });
 
@@ -84,12 +68,6 @@ teacherSchema.methods = {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
-
-// static methods
-teacherSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "avatar"
-);
-teacherSchema.statics.avatarPath = AVATAR_PATH;
 
 const Teacher = mongoose.model("teacherSchema", teacherSchema);
 

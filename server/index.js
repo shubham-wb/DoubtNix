@@ -14,4 +14,8 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 app.use(cors());
 
+app.use("/", require("./routes"));
+
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
+// use express router
