@@ -1,0 +1,24 @@
+{
+  "name": "doubtnix",
+  "version": "1.0.0",
+  "description": "edtech web app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "servers": "concurrently \"npm run dev\" \"cd ../client && npm run start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shubham",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "concurrently": "^7.1.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.11",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15"
+  }
+}
