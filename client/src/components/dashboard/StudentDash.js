@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/css/uDashboard.css";
+import "../../assets/css/uDashboard.css";
 function studentDash() {
   return (
     <div className="u-dashboard">

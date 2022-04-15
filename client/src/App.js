@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import FacultySignUp from "./components/FacultySignUp";
-import UserSignUp from "./components/UserSignup";
-import StudentDash from "./components/StudentDash";
-import TutorDash from "./components/TutorDash";
-
+import FacultySignUp from "./components/credentials/FacultySignUp";
+import UserSignUp from "./components/credentials/UserSignup";
+import StudentDash from "./components/dashboard/StudentDash";
+import TutorDash from "./components/dashboard/TutorDash";
+import CreateCourse from "./components/course/CreateCourse";
 import Navbar from "./components/Navbar";
 export class App extends Component {
   render() {
@@ -31,6 +31,7 @@ export class App extends Component {
           />
           <Route path="/dashboard/0" element={<StudentDash />} />
           <Route path="/dashboard/1" element={<TutorDash />} />
+          <Route path="/course/new" element={<CreateCourse />} />
         </Routes>
       </BrowserRouter>
     );

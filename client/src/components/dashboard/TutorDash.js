@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/css/tDashBoard.css";
+import "../../assets/css/tDashBoard.css";
 function TutorDashboard() {
   return (
     <div className="t-dashboard">

@@ -1,8 +1,8 @@
 import React from "react";
-import "../assets/css/uSignup.css";
+import "../../assets/css/fSignup.css";
 import { useState } from "react";
-function UserSignUp() {
-  let [userDetails, setUserDetails] = useState({
+function FacultySignUp() {
+  let [facultyDetails, setFacultyDetails] = useState({
     name: "",
     email: "",
     subject: "",
@@ -14,19 +14,19 @@ function UserSignUp() {
   function handleInputChange(event) {
     const { name, value } = event.target;
 
-    setUserDetails((prevState) => ({
-      userDetails: {
+    setFacultyDetails((prevState) => ({
+      facultyDetails: {
         // object that we want to update
-        ...prevState.userDetails, // keep all other key-value pairs
+        ...prevState.facultyDetails, // keep all other key-value pairs
         [name]: value, // update the value of specific key
       },
     }));
   }
 
   const handleSubmit = (event) => {
-    let post = JSON.stringify(userDetails.userDetails);
+    let post = JSON.stringify(facultyDetails.facultyDetails);
     console.log(post);
-    const url = "http://localhost:8000/signup/user";
+    const url = "http://localhost:8000/signup/faculty";
     let xhr = new XMLHttpRequest();
 
     xhr.open("POST", url, true);
@@ -38,8 +38,8 @@ function UserSignUp() {
         console.log("Post successfully created!");
       }
     };
-    setUserDetails(
-      (userDetails = {
+    setFacultyDetails(
+      (facultyDetails = {
         name: "",
         email: "",
         subject: "",
@@ -54,6 +54,7 @@ function UserSignUp() {
   return (
     <div className="f-signup-container">
       <div className="f-signup-wrapper-container">
+        <div className="f-signup-description"></div>
         <div className="f-signup-form">
           <form>
             <input
@@ -61,22 +62,29 @@ function UserSignUp() {
               placeholder="Name"
               name="name"
               onChange={handleInputChange}
-              value={userDetails.name}
+              value={facultyDetails.name}
             ></input>
             <input
               type="text"
               placeholder="Username"
               name="username"
               onChange={handleInputChange}
-              value={userDetails.username}
+              value={facultyDetails.username}
             ></input>
 
+            <input
+              type="subject"
+              placeholder="Enter Your Subject"
+              name="subject"
+              onChange={handleInputChange}
+              value={facultyDetails.subject}
+            ></input>
             <input
               type="email"
               placeholder="Email"
               name="email"
               onChange={handleInputChange}
-              value={userDetails.email}
+              value={facultyDetails.email}
             ></input>
 
             <input
@@ -84,7 +92,7 @@ function UserSignUp() {
               placeholder="Password"
               name="password"
               onChange={handleInputChange}
-              value={userDetails.password}
+              value={facultyDetails.password}
             ></input>
 
             <input
@@ -92,7 +100,7 @@ function UserSignUp() {
               placeholder="Confirm Password"
               name="confirmPassword"
               onChange={handleInputChange}
-              value={userDetails.confirmPassword}
+              value={facultyDetails.confirmPassword}
             ></input>
             <button
               onClick={(e) => {
@@ -114,10 +122,9 @@ function UserSignUp() {
             </p>
           </form>
         </div>
-        <div className="f-signup-description"></div>
       </div>
     </div>
   );
 }
 
-export default UserSignUp;
+export default FacultySignUp;
