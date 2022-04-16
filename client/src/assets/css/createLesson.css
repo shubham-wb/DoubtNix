@@ -1,0 +1,68 @@
+.input-lesson-container {
+  padding-top: 2%;
+  display: flex;
+  flex-direction: column;
+  background: lightsteelblue;
+  height: 100%;
+  width: 100%;
+  padding-left: 40px;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 20%;
+  width: 60%;
+}
+
+.resource {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  width: 60%;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 20%;
+  width: 60%;
+}
+
+input {
+  height: 70%;
+  width: 90%;
+  border: solid 2px white;
+}
+
+input:focus {
+  border: solid 2px white;
+}
+.nav-btns {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  height: 10%;
+  width: 60%;
+  justify-content: flex-end;
+}
+textarea:focus,
+input:focus {
+  outline: none;
+}
+button {
+  width: 15%;
+  margin: 0px;
+  height: 74%;
+}
+
+hr {
+  margin: 0px;
+  width: 60%;
+}

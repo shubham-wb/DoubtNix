@@ -12,17 +12,23 @@ module.exports.create = (req, res) => {
   });
 };
 
-module.exports.listByInstructor = (req, res) => {
-  
-  
-};
+module.exports.listByInstructor = (req, res) => {};
 
 module.exports.photo = () => {};
 
 module.exports.defaultPhoto = () => {};
 
 module.exports.newLesson = () => {};
-module.exports.read = () => {};
+
+module.exports.read = async (req, res) => {
+  let course = await Course.find({});
+  console.log(course);
+  if (course) {
+    return res.json({
+      course: course,
+    });
+  }
+};
 
 module.exports.update = () => {};
 

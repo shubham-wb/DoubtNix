@@ -62,10 +62,26 @@
   background-color: yellow;
   height: 100%;
   width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 a {
   text-decoration: none;
 
   color: black;
+}
+
+.course-container {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 20px;
+  height: 250px;
+  width: 250px;
+  background: whitesmoke;
+  border: solid 1px red;
+  border-radius: 20px;
 }

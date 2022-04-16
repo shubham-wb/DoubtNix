@@ -1,0 +1,132 @@
+.course-edit-container {
+  flex-direction: column;
+  background: lightcoral;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-edit-wrapper {
+  display: flex;
+  height: 50%;
+  width: 50%;
+  flex-direction: column;
+  background: firebrick;
+}
+
+.course-edit-button {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: yellow;
+}
+
+.course-description {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.course-header {
+  height: 100%;
+  width: 50%;
+  background: green;
+}
+
+.course-image {
+  height: 100%;
+  width: 50%;
+  background: aliceblue;
+}
+
+.course-desc {
+  height: 100%;
+  display: flex;
+  width: 50%;
+  background: green;
+  flex-direction: column;
+}
+
+.edit-btns {
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+}
+.edit-btns button {
+  margin-left: 30px;
+  margin-right: 20px;
+  margin-top: -3px;
+  height: 40px;
+  width: 40%;
+  border-radius: 10px;
+}
+
+.course-title,
+.details {
+  height: 30%;
+  width: 100%;
+  margin-top: 10px;
+  background: red;
+}
+
+.lesson-edit-wrapper {
+  height: 50%;
+  width: 50%;
+  background: orange;
+  display: flex;
+  flex-direction: column;
+}
+.lesson-header {
+  height: 40%;
+  background: yellow;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.lesson-desc {
+  width: 70%;
+  height: 100%;
+  background: skyblue;
+}
+
+.lesson-btn {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lesson-list {
+  height: 60%;
+  width: 100%;
+  background: aquamarine;
+  display: flex;
+  flex-direction: column;
+}
+.course-edit-btn {
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+}
+
+.MuiSvgIcon-root {
+  margin-left: 30px;
+  height: 40px;
+  width: 40px;
+  fill: aliceblue;
+}
+
+.lesson-btn button {
+  margin-left: 30px;
+  margin-right: 20px;
+  margin-top: -3px;
+  height: 40px;
+  width: 70%;
+  border-radius: 10px;
+}

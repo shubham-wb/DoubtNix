@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
 
-const LessonSchema = new mongoose.Schema({
-  title: String,
-  content: String,
-  resource_url: String,
-});
-
-const Lesson = mongoose.model("Lesson", LessonSchema);
-
 const CourseSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -39,7 +31,12 @@ const CourseSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  lessons: [LessonSchema],
+  lessons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Lesson",
+    },
+  ],
 });
 
 const Course = mongoose.model("Course", CourseSchema);

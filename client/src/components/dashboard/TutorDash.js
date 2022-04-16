@@ -4,6 +4,8 @@ import TutAside from "./TutorDashboard/TutAside";
 import TutNav from "./TutorDashboard/TutNav";
 import CreateCourse from "../course/CreateCourse";
 import Courses from "./TutorDashboard/Courses";
+import EditCourse from "./TutorDashboard/EditCourse";
+import CreateLesson from "./TutorDashboard/CreateLesson";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 function TutorDashboard() {
   return (
@@ -18,6 +20,12 @@ function TutorDashboard() {
             <Route exact path="/article/create" element={<></>}></Route>
             <Route exact path="/doubts" element={<></>}></Route>
             <Route exact path="/course/new" element={<CreateCourse />}></Route>
+            <Route exact path="/course/:id" element={<EditCourse />}></Route>
+            <Route
+              exact
+              path="/course/:id/lesson/create"
+              element={<CreateLesson />}
+            ></Route>
           </Routes>
         </div>
       </div>

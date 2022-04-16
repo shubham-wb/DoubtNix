@@ -6,4 +6,6 @@ const postController = require("../controllers/postsController");
 
 postRouter.post("/create", postController.create);
 
+postRouter.get("/list", postController.listall);
+
 module.exports = postRouter;

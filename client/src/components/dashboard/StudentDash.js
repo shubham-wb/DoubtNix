@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/uDashboard.css";
 import Post from "../posts/Post";
 function StudentDash() {
+  useEffect(() => {
+    const getAPI = async () => {
+      const response = await fetch("http://localhost:8000/posts/list");
+      const data = await response.json();
+      try {
+        console.log(data);
+        const { posts } = data;
+        setPostList((postList = posts));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAPI();
+  }, []);
+
+  let [postList, setPostList] = useState();
   let [post, setPost] = useState({
     content: "",
     doubt: false,
@@ -99,12 +115,11 @@ function StudentDash() {
             </div>
           </div>
           <div className="posts-container">
-            <Post
-              data={{
-                image:
-                  "https://files.codingninjas.com/cdn-cgi/image/width=438/mascot-9644-9850.png",
-              }}
-            />
+            {postList
+              ? postList.map((elem) => {
+                  return <Post data={elem} />;
+                })
+              : null}
           </div>
         </div>
         <div className="u-side-panel"></div>
