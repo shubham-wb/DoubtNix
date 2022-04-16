@@ -3,19 +3,18 @@ const Course = require("../models/course");
 module.exports.create = (req, res) => {
   Course.create(req.body, function (err, user) {
     if (err) {
-      console.log("Error in creating user while signing up", err);
+      console.log("Error in creating Course while signing up", err);
       return;
     }
     return res.json({
-      message: "faculty created succesfully ",
+      message: "Course created succesfully ",
     });
   });
 };
 
 module.exports.listByInstructor = (req, res) => {
-  return res.json({
-    message: "helo",
-  });
+  
+  
 };
 
 module.exports.photo = () => {};

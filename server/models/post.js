@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const multer = require("multer");
 const postSchema = mongoose.Schema(
   {
     content: {
@@ -20,9 +19,10 @@ const postSchema = mongoose.Schema(
         ref: "Comment",
       },
     ],
-    category: {
-      type: String,
-      enum: ["post", "doubt"],
+
+    doubt: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -30,21 +30,6 @@ const postSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", PHOTO_PATH));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-// static methods
-postSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "photo"
-);
-postSchema.statics.photoPath = PHOTO_PATH;
 
 const Post = mongoose.model("postSchema", postSchema);
 

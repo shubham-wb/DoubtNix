@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import "../../assets/css/uDashboard.css";
-import Post from "../posts/Post";
-function StudentDash() {
+
+function Article() {
   let [post, setPost] = useState({
     content: "",
     doubt: false,
@@ -58,59 +57,34 @@ function StudentDash() {
     }));
     setIsChecked(!isChecked);
   };
-
   return (
-    <div className="u-dashboard">
-      <nav id="u-nav">
-        <ul>
-          <li>Home</li>
-          <li>Courses</li>
-          <li>Doubts</li>
-          <li>Profile</li>
-        </ul>
-      </nav>
-
-      <div className="u-main">
-        <div className="u-feed">
-          <div className="create-post">
-            <div className="post-pic">Upload photo</div>
-            <input
-              type="text"
-              value={post.content}
-              name="content"
-              onChange={handleChange}
-            ></input>
-            <div className="post-btn">
-              <input
-                type="checkbox"
-                value={post.doubt}
-                name="doubt"
-                checked={isChecked}
-                onChange={handleSelect}
-              ></input>
-              <button
-                id="post-submit"
-                onClick={(e) => {
-                  handleSubmit(e);
-                }}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-          <div className="posts-container">
-            <Post
-              data={{
-                image:
-                  "https://files.codingninjas.com/cdn-cgi/image/width=438/mascot-9644-9850.png",
-              }}
-            />
-          </div>
-        </div>
-        <div className="u-side-panel"></div>
+    <div className="create-post">
+      <div className="post-pic">Upload photo</div>
+      <input
+        type="text"
+        value={post.content}
+        name="content"
+        onChange={handleChange}
+      ></input>
+      <div className="post-btn">
+        <input
+          type="checkbox"
+          value={post.doubt}
+          name="doubt"
+          checked={isChecked}
+          onChange={handleSelect}
+        ></input>
+        <button
+          id="post-submit"
+          onClick={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
 }
 
-export default StudentDash;
+export default Article;

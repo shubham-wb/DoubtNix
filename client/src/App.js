@@ -30,7 +30,7 @@ export class App extends Component {
             }
           />
           <Route path="/dashboard/0" element={<StudentDash />} />
-          <Route path="/dashboard/1" element={<TutorDash />} />
+          <Route path="/dashboard/1/*" element={<TutorDash />} />
           <Route path="/course/new" element={<CreateCourse />} />
         </Routes>
       </BrowserRouter>
