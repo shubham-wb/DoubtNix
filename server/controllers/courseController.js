@@ -22,10 +22,10 @@ module.exports.newLesson = () => {};
 
 module.exports.read = async (req, res) => {
   let course = await Course.find({});
-  console.log(course);
   if (course) {
     return res.json({
-      course: course,
+      data: course,
+      message: "courses listed succesfully",
     });
   }
 };

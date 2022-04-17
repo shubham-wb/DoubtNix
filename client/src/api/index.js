@@ -1,15 +1,14 @@
 import { API_URLS, getFormBody, LOCALSTORAGE_TOKEN_KEY } from "../utils";
 
 const customFetch = async (url, { body, ...customConfig }) => {
-  console.log("I am custom fetch ", customConfig);
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
 
   const headers = {
-    "content-type": "application/x-www-form-urlencoded",
+    "content-type": "application/json",
   };
 
   if (token) {
-    headers.Authorization = `Bearer ${token}`;
+    headers["x-auth-token"] = token;
   }
 
   const config = {
@@ -21,21 +20,20 @@ const customFetch = async (url, { body, ...customConfig }) => {
   };
 
   if (body) {
-    console.log("body :", body);
-    config.body = body;
+    config.body = JSON.stringify(body);
   }
 
   try {
+    console.log(config, url);
     const response = await fetch(url, config);
     const data = await response.json();
 
-    if (data.success) {
+    if (data.data) {
       return {
         data: data,
         success: true,
       };
     }
-
     throw new Error(data.message);
   } catch (error) {
     console.error("error");
@@ -47,9 +45,14 @@ const customFetch = async (url, { body, ...customConfig }) => {
 };
 
 export const login = (email, hashed_password) => {
-  console.log("mai chla ");
   return customFetch(API_URLS.login(), {
     method: "POST",
     body: { email, hashed_password },
+  });
+};
+
+export const listAllCourses = () => {
+  return customFetch(API_URLS.listAllCourses(), {
+    method: "GET",
   });
 };

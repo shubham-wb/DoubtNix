@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import jwt from "jwt-decode";
 
-import { AuthContext, PostsContext } from "../providers";
-import { login as userLogin } from "../api";
+import { AuthContext, PostsContext, CoursesContext } from "../providers";
+import { login as userLogin, listAllCourses as getCourses } from "../api";
 import {
   setItemInLocalStorage,
   LOCALSTORAGE_TOKEN_KEY,
@@ -36,14 +36,13 @@ export const useProvideAuth = () => {
   }, []);
 
   const login = async (email, password) => {
-    console.log("mereko bulaya kya ");
     const response = await userLogin(email, password);
 
     if (response) {
       setUser(response.data.user);
       setItemInLocalStorage(
         LOCALSTORAGE_TOKEN_KEY,
-        response.data.token ? response.data.token : null
+        response.data.data ? response.data.data : null
       );
       return {
         success: true,
@@ -54,82 +53,88 @@ export const useProvideAuth = () => {
         message: response.message,
       };
     }
+    // };
+    //   const updateUser = async (userId, name, password, confirmPassword) => {
+    //   const response = await editProfile(userId, name, password, confirmPassword);
+
+    //   console.log("response", response);
+    //   if (response.success) {
+    //     setUser(response.data.user);
+    //     setItemInLocalStorage(
+    //       LOCALSTORAGE_TOKEN_KEY,
+    //       response.data.token ? response.data.token : null
+    //     );
+    //     return {
+    //       success: true,
+    //     };
+    //   } else {
+    //     return {
+    //       success: false,
+    //       message: response.message,
+    //     };
+    //   }
+    // };
+    //   const signup = async (name, email, password, confirmPassword) => {
+    //     const response = await register(name, email, password, confirmPassword);
+
+    //     if (response.success) {
+    //       return {
+    //         success: true,
+    //       };
+    //     } else {
+    //       return {
+    //         success: false,
+    //         message: response.message,
+    //       };
+    //     }
+  };
+
+  const logout = () => {
+    setUser(null);
+    removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
+  };
+
+  return {
+    user,
+    login,
+    loading,
   };
 };
 
-// const updateUser = async (userId, name, password, confirmPassword) => {
-//   const response = await editProfile(userId, name, password, confirmPassword);
+export const useCourses = () => {
+  return useContext(CoursesContext);
+};
 
-//   console.log("response", response);
-//   if (response.success) {
-//     setUser(response.data.user);
-//     setItemInLocalStorage(
-//       LOCALSTORAGE_TOKEN_KEY,
-//       response.data.token ? response.data.token : null
-//     );
-//     return {
-//       success: true,
-//     };
-//   } else {
-//     return {
-//       success: false,
-//       message: response.message,
-//     };
-//   }
-// };
-//   const signup = async (name, email, password, confirmPassword) => {
-//     const response = await register(name, email, password, confirmPassword);
+export const useProvideCourses = () => {
+  const [courses, setCourses] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-//     if (response.success) {
-//       return {
-//         success: true,
-//       };
-//     } else {
-//       return {
-//         success: false,
-//         message: response.message,
-//       };
-//     }
-//   };
+  const listAllCourses = async () => {
+    const response = await getCourses();
 
-//   const logout = () => {
-//     setUser(null);
-//     removeItemFromLocalStorage(LOCALSTORAGE_TOKEN_KEY);
-//   };
+    if (response) {
+      setCourses(response.data.data);
+      return {
+        data: response.data.data,
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.message,
+      };
+    }
+  };
 
-//   const updateUserFriends = (addFriend, friend) => {
-//     if (addFriend) {
-//       setUser({
-//         ...user,
-//         friends: [...user.friends, friend],
-//       });
-//       return;
-//     }
+  return {
+    listAllCourses,
+    courses,
+  };
+};
 
-//     const newFriends = user.friends.filter(
-//       (f) => f.to_user._id !== friend.to_user._id
-//     );
-
-//     setUser({
-//       ...user,
-//       friends: newFriends,
-//     });
-//   };
-
-//   return {
-//     user,
-//     login,
-//     logout,
-//     loading,
-//     signup,
-//     updateUser,
-//     updateUserFriends,
-//   };
-// };
-
-// export const usePosts = () => {
-//   return useContext(PostsContext);
-// };
+export const usePosts = () => {
+  return useContext(PostsContext);
+};
 
 // export const useProvidePosts = () => {
 //   const [posts, setPosts] = useState(null);

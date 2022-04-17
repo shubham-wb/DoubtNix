@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 import FacultySignUp from "./components/credentials/FacultySignUp";
 import UserSignUp from "./components/credentials/UserSignup";
 import StudentDash from "./components/dashboard/StudentDash";
@@ -7,22 +13,25 @@ import TutorDash from "./components/dashboard/TutorDash";
 import CreateCourse from "./components/course/CreateCourse";
 import Navbar from "./components/Navbar";
 import SignIn from "./components/credentials/SignIn";
-import { useAuth } from "./hooks";
+import { useAuth, useCourses, usePosts } from "./hooks";
 import Loader from "./loader";
-function PrivateRoute({ children, ...rest }) {
+
+const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
-  return (
-    <Route
-      {...rest}
-      render={() => {
-        if (auth.user) {
-          return children;
-        }
-        return <Navigate to="/login" />;
-      }}
-    />
-  );
-}
+  return auth ? <Outlet /> : <Navigate to="/login" />;
+};
+
+const StuRoute = ({ children, ...rest }) => {
+  const auth = useAuth();
+  const role = auth.user.role;
+  return role === "student" ? <Outlet /> : <Navigate to="/dashboard/1" />;
+};
+
+const TutRoute = ({ children, ...rest }) => {
+  const auth = useAuth();
+  const role = auth.user.role;
+  return role === "teacher" ? <Outlet /> : <Navigate to="/dashboard/0" />;
+};
 
 const Page404 = () => {
   return <h1>404</h1>;
@@ -30,8 +39,6 @@ const Page404 = () => {
 
 export const App = () => {
   const auth = useAuth();
-
-  console.log("auth", auth);
   if (auth.loading) {
     return <Loader />;
   }
@@ -47,7 +54,7 @@ export const App = () => {
               <FacultySignUp />
             </>
           }
-        />
+        ></Route>
         <Route
           path="/signup/student"
           element={
@@ -57,20 +64,17 @@ export const App = () => {
             </>
           }
         />
-        <PrivateRoute path="/dashboard/0">
-          <StudentDash />
-        </PrivateRoute>
-        <PrivateRoute path="/dashboard/1/*">
-          <TutorDash />
-        </PrivateRoute>
-        <PrivateRoute path="/course/new">
-          <CreateCourse />
-        </PrivateRoute>
-        <Route path="/login" element={<SignIn />} />
-
-        <Route>
-          <Page404 />
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<StuRoute />}>
+            <Route path="/dashboard/0" element={<StudentDash />}></Route>
+          </Route>
+          <Route path="/dashboard/" element={<TutRoute />}>
+            <Route path="/dashboard/1/*" element={<TutorDash />}></Route>
+          </Route>
+          <Route path="/course/new" element={<CreateCourse />}></Route>
         </Route>
+        <Route path="/login" element={<SignIn />}></Route>
+        <Route path="*" element={<Page404 />}></Route>
       </Routes>
     </BrowserRouter>
   );

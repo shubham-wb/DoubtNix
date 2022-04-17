@@ -3,6 +3,7 @@ const Teacher = require("../models/teacher");
 const jwt = require("jsonwebtoken");
 
 module.exports.createSession = async function (req, res) {
+  console.log(req.body);
   try {
     let user = await (User.findOne({ email: req.body.email }) ||
       Teacher.findOne({ email: req.body.email }));
@@ -17,9 +18,7 @@ module.exports.createSession = async function (req, res) {
 
     return res.status(200).json({
       message: "Sign in successful, here is your token, please keep it safe!",
-      data: {
-        token: token,
-      },
+      data: token,
     });
   } catch (err) {
     console.log("********", err);

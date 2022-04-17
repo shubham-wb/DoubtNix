@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useCourses } from "../../../hooks";
+import { CoursesContext } from "../../../providers/index";
 function Courses() {
+  let [courses, setCourses] = useState();
+  const course = useCourses();
+
   useEffect(() => {
-    const getAPI = async () => {
-      const response = await fetch("http://localhost:8000/courses/list");
-      const data = await response.json();
-      try {
-        console.log(data);
-        const { course } = data;
-        setCourses((courses = course));
-      } catch (error) {
-        console.log(error);
-      }
+    const getCourses = async () => {
+      let response = await course.listAllCourses();
+      setCourses((courses = response.data));
     };
-    getAPI();
+    getCourses();
   }, []);
 
-  let [courses, setCourses] = useState();
   return (
     <>
       {courses

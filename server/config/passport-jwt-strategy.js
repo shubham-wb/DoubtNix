@@ -4,24 +4,21 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const User = require("../models/user");
 
 let opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJwt.fromHeader("x-auth-token"),
   secretOrKey: "doubtnix",
 };
 
 passport.use(
-  new JWTStrategy(opts, function (jwt_PayLoad, done) {
-    User.findById(jwt_PayLoad._id, function (err, user) {
-      if (err) {
-        console.log("Error in finding user from Jwt");
-        return;
-      }
-      if (user) {
-        return done(null, user);
-      } else {
+  new JWTStrategy(opts, (jwt_payload, done) => {
+    console.log(jwt_payload, "mai chla bhi ");
+
+    User.findById(jwt_payload.id)
+      .then((user) => {
+        if (user) {
+          return done(null, user);
+        }
         return done(null, false);
-      }
-    });
+      })
+      .catch((err) => console.log(err));
   })
 );
-
-module.exports = passport;

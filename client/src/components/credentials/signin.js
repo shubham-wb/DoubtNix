@@ -15,11 +15,10 @@ const SignIn = () => {
     if (!email || !password) {
       return toast.error("Please add both email and password");
     }
-
     const response = await auth.login(email, password);
-
     if (response.success) {
       toast.success("signed in successfully");
+      console.log(response.data);
     } else {
       toast.error("Umm ! we cannot log you in ");
     }
@@ -27,8 +26,11 @@ const SignIn = () => {
   };
 
   if (auth.user) {
-    toast.success("succesfully signedin");
-    return <Navigate to="/dashboard/0" />;
+    if (auth.user.role === "student") {
+      return <Navigate to="/dashboard/0" />;
+    } else if (auth.user.role === "teacher") {
+      return <Navigate to="/dashboard/1" />;
+    }
   }
 
   return (
@@ -49,7 +51,7 @@ const SignIn = () => {
       <div>
         <input
           type="password"
-          placeholder="Paasword"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
