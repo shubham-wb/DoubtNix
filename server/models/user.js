@@ -19,19 +19,15 @@ const userSchema = mongoose.Schema({
     required: "Password is required",
   },
   salt: String,
-  confirmPassword: {
-    type: String,
-    require: true,
-    minLength: 8,
-  },
+
   name: {
     type: String,
     require: true,
   },
   role: {
     type: String,
-    enum: ["Admin", "Student", "Teacher"],
-    defaultt: "Student",
+
+    default: "Student",
   },
   avatar: {
     type: String,
@@ -50,6 +46,15 @@ userSchema
   .get(function () {
     return this._password;
   });
+
+userSchema.path("hashed_password").validate(function (v) {
+  if (this._password && this._password.length < 8) {
+    this.invalidate("password", "Password must be at least 8 characters.");
+  }
+  if (this.isNew && !this._password) {
+    this.invalidate("password", "Password is required");
+  }
+}, null);
 
 userSchema.methods = {
   authenticate: function (plainText) {

@@ -22,18 +22,14 @@ const teacherSchema = mongoose.Schema({
     required: "Password is required",
   },
   salt: String,
-  confirmPassword: {
-    type: String,
-    require: true,
-    minLength: 8,
-  },
+
   name: {
     type: String,
     require: true,
   },
   role: {
     type: String,
-    enum: ["Admin", "Teacher"],
+
     default: "Teacher",
   },
 });
@@ -48,6 +44,15 @@ teacherSchema
   .get(function () {
     return this._password;
   });
+
+teacherSchema.path("hashed_password").validate(function (v) {
+  if (this._password && this._password.length < 8) {
+    this.invalidate("password", "Password must be at least 8 characters.");
+  }
+  if (this.isNew && !this._password) {
+    this.invalidate("password", "Password is required");
+  }
+}, null);
 
 teacherSchema.methods = {
   authenticate: function (plainText) {
@@ -68,7 +73,6 @@ teacherSchema.methods = {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
 };
-
 const Teacher = mongoose.model("teacherSchema", teacherSchema);
 
 module.exports = Teacher;
