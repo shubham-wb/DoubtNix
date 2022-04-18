@@ -1,7 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import "../../../assets/css/editCourse.css";
+import { useCourses } from "../../../hooks";
 function EditCourse() {
+  let { id } = useParams();
+  console.log(id);
+  let Courses = useCourses();
+  let [lessons, setLessons] = useState([]);
+  useEffect(() => {
+    const getLesson = async (id) => {
+      let response = await Courses.getCourseById(id);
+      console.log(response);
+    };
+    getLesson();
+  });
+
   return (
     <div className="course-edit-container">
       <div className="course-edit-wrapper">

@@ -2,7 +2,13 @@ import { useContext, useState, useEffect } from "react";
 import jwt from "jwt-decode";
 
 import { AuthContext, PostsContext, CoursesContext } from "../providers";
-import { login as userLogin, listAllCourses as getCourses } from "../api";
+import {
+  getCourse,
+  login as userLogin,
+  listAllCourses as getCourses,
+  addCourse as newCourse,
+  listMyCourses,
+} from "../api";
 import {
   setItemInLocalStorage,
   LOCALSTORAGE_TOKEN_KEY,
@@ -126,9 +132,58 @@ export const useProvideCourses = () => {
     }
   };
 
+  const addCourse = async (values) => {
+    const response = await newCourse(values);
+    console.log(response, "response");
+    if (response) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
+
+  const myCourses = async (id) => {
+    const response = await listMyCourses(id);
+
+    if (response) {
+      return {
+        data: response.data.data,
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
+
+
+  
+  const getCourseById= (id) => {
+     const response = await getCourse(id);
+
+    if (response) {
+      return {
+        data: response.data.data,
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  
+  }
   return {
     listAllCourses,
     courses,
+    addCourse,
+    myCourses,
+    getCourseById,
   };
 };
 

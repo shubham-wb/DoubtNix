@@ -6,8 +6,10 @@ const initialState = {
   courses: [],
   loading: true,
   listAllCourses: () => {},
-  addCourseToState: () => {},
+  addCourse: () => {},
   addLesson: () => {},
+  myCourses: () => {},
+  getCourseById: () => {},
 };
 
 export const CoursesContext = createContext(initialState);

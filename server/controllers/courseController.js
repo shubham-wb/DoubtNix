@@ -1,18 +1,22 @@
 const Course = require("../models/course");
+const Teacher = require("../models/teacher");
+module.exports.create = async (req, res) => {
+  let teacher = await Teacher.findById(req.body.instructor);
 
-module.exports.create = (req, res) => {
-  Course.create(req.body, function (err, user) {
-    if (err) {
-      console.log("Error in creating Course while signing up", err);
-      return;
-    }
+  if (teacher) {
+    let course = await Course.create(req.body);
+    teacher.courses.push(course);
+    teacher.save((err, use) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
     return res.json({
       message: "Course created succesfully ",
     });
-  });
+  }
 };
-
-module.exports.listByInstructor = (req, res) => {};
 
 module.exports.photo = () => {};
 
@@ -26,15 +30,47 @@ module.exports.read = async (req, res) => {
     return res.json({
       data: course,
       message: "courses listed succesfully",
+      success: "true",
+    });
+  } else {
+    return res.json({
+      message: "cannot find courses",
+      success: "false",
     });
   }
+};
+
+module.exports.listMyCourses = async (req, res) => {
+  let FacultyId = req.params;
+
+  const teacher = await Teacher.findById(FacultyId.userId)
+    .sort("-createdAt")
+    .populate("courses");
+
+  console.log(teacher.courses);
+  return res.json({
+    data: teacher.courses,
+    message: "courses listed succesfully",
+  });
 };
 
 module.exports.update = () => {};
 
 module.exports.remove = () => {};
 
-module.exports.courseByID = () => {};
+module.exports.CourseById = async (req, res) => {
+  let CourseId = req.params;
+
+  const corse = await Course.findById(CourseId.CourseId)
+    .sort("-createdAt")
+    .populate("lessons");
+
+  console.log(corse.lessons);
+  return res.json({
+    data: corse.lessons,
+    message: "lessons listed succesfully",
+  });
+};
 
 module.exports.userByID = () => {};
 

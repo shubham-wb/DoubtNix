@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "../../assets/css/createCourse.css";
+import { useAuth, useCourses } from "../../hooks";
 export default function NewCourse() {
+  const Courses = useCourses();
+  const auth = useAuth();
+  const user = auth.user;
+
   let [values, setValues] = useState({
     name: "",
     description: "",
@@ -8,35 +13,25 @@ export default function NewCourse() {
     category: "",
     redirect: false,
     error: "",
-    Instructor: "123456",
   });
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-
     setValues((prevState) => ({
       values: {
         // object that we want to update
-        ...prevState.values, // keep all other key-value pairs
+        ...prevState.values,
+        instructor: user._id,
+        // keep all other key-value pairs
         [name]: value, // update the value of specific key
       },
     }));
   }
 
-  const handleSubmit = (event) => {
-    let post = JSON.stringify(values.values);
-    console.log(post);
-    const url = "http://localhost:8000/courses/create";
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    xhr.send(post);
+  const handleSubmit = async (event) => {
+    console.log(user.name);
+    let response = await Courses.addCourse(values.values);
 
-    xhr.onload = function () {
-      if (xhr.status === 201) {
-        console.log("Course successfully created!");
-      }
-    };
     setValues(
       (values = {
         name: "",
@@ -44,7 +39,7 @@ export default function NewCourse() {
         image: "",
         category: "",
         redirect: false,
-        Instructor: "123456",
+
         error: "",
       })
     );

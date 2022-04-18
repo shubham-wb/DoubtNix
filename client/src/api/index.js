@@ -56,3 +56,26 @@ export const listAllCourses = () => {
     method: "GET",
   });
 };
+
+export const addCourse = (value) => {
+  return customFetch(API_URLS.addCourse(), {
+    method: "POST",
+    body: value,
+  });
+};
+
+export const listMyCourses = (id) => {
+  let url = API_URLS.listMyCourses() + id;
+
+  return customFetch(url, {
+    method: "GET",
+  });
+};
+
+export const getCourse = (id) => {
+  let url = API_URLS.getCourse() + id;
+
+  return customFetch(url, {
+    method: "GET",
+  });
+};

@@ -18,6 +18,7 @@ import Loader from "./loader";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
+  console.log(auth);
   return auth ? <Outlet /> : <Navigate to="/login" />;
 };
 
@@ -30,7 +31,7 @@ const StuRoute = ({ children, ...rest }) => {
 const TutRoute = ({ children, ...rest }) => {
   const auth = useAuth();
   const role = auth.user.role;
-  return role === "teacher" ? <Outlet /> : <Navigate to="/dashboard/0" />;
+  return role === "Teacher" ? <Outlet /> : <Navigate to="/dashboard/0" />;
 };
 
 const Page404 = () => {
