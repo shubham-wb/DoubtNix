@@ -11,7 +11,7 @@ function StudentDash(props) {
   useEffect(() => {
     async function getAPI() {
       let response = await post.posts;
-      console.log("u dashboard", post.posts);
+
       setPostList((postList = response.data));
     }
     getAPI();

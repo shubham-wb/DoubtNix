@@ -8,6 +8,7 @@ const initialState = {
   addPostToState: () => {},
   addComment: () => {},
   deletePost: () => {},
+  doubtResolve: () => {},
 };
 
 export const PostsContext = createContext(initialState);

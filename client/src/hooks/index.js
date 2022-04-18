@@ -8,12 +8,13 @@ import {
   listAllCourses as getCourses,
   addCourse as newCourse,
   listMyCourses,
-  publishMyCourse,
   publishCourse,
   deleteCourse,
   updateCourse,
   getPosts,
   removePost,
+  resolveDoubt,
+  createComment,
 } from "../api";
 import {
   setItemInLocalStorage,
@@ -235,7 +236,6 @@ export const useProvidePosts = () => {
         setPosts((posts = response.data));
       }
 
-      console.log(posts);
       setLoading(false);
     };
     fetchPosts();
@@ -247,20 +247,34 @@ export const useProvidePosts = () => {
     setPosts(newPosts);
   };
 
-  //   const addComment = (comment, postId) => {
-  //     const newPosts = posts.map((post) => {
-  //       if (post._id === postId) {
-  //         return { ...post, comments: [...post.comments, comment] };
-  //       }
-  //       return post;
-  //     });
+  const addComment = async (comment, postId) => {
+    let response = await createComment(comment, postId);
+    const newPosts = posts.map((post) => {
+      if (post._id === postId) {
+        return { ...post, comments: [...post.comments, comment] };
+      }
+      return post;
+    });
 
-  //     setPosts(newPosts);
-  //   };
+    setPosts(newPosts);
+  };
 
   const deletePost = async (id, user) => {
     let response = await removePost(id, user);
     if (response.success) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
+
+  const doubtResolve = async (id, user) => {
+    let response = await resolveDoubt(id, user);
+    if (response) {
       return {
         success: true,
       };
@@ -275,5 +289,7 @@ export const useProvidePosts = () => {
     loading,
     addPostToState,
     deletePost,
+    doubtResolve,
+    addComment,
   };
 };

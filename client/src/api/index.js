@@ -124,3 +124,22 @@ export const removePost = (id, user) => {
     body: user,
   });
 };
+
+export const resolveDoubt = (id, user) => {
+  let url = API_URLS.resolveDoubt() + id;
+
+  return customFetch(url, {
+    method: "POST",
+    body: user,
+  });
+};
+
+export const createComment = async (content, postId) => {
+  return customFetch(API_URLS.comment(), {
+    method: "POST",
+    body: {
+      post_id: postId,
+      content,
+    },
+  });
+};

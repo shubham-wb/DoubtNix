@@ -14,6 +14,8 @@ export const API_URLS = {
   getPosts: () => `${API_ROOT}/posts/list`,
   createPost: () => `${API_ROOT}/posts/create`,
   removePost: () => `${API_ROOT}/posts/destroy/`,
+  resolveDoubt: () => `${API_ROOT}/posts/resolve/`,
+  createComment: () => `${API_ROOT}/comments/create/`,
 };
 
 export const LOCALSTORAGE_TOKEN_KEY = "token";

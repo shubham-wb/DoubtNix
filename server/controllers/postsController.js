@@ -4,7 +4,11 @@ const User = require("../models/user");
 const Teacher = require("../models/teacher");
 module.exports.read = async function (req, res) {
   try {
-    let post = await Post.find({});
+    let post = await Post.find({})
+      .sort("-createdAt")
+      .populate({ path: "comments", model: "Comment" });
+
+    console.log(post);
     if (post) {
       return res.json({
         data: post,
@@ -73,7 +77,6 @@ module.exports.destroy = async function (req, res) {
   let post = await Post.findById(req.params.postId);
 
   if (post.user._id.toString() === req.body._id) {
-    console.log("yes");
     post.remove();
 
     await Comment.deleteMany({ post: req.params.id });
@@ -86,5 +89,20 @@ module.exports.destroy = async function (req, res) {
     });
   } else {
     return res.redirect("back");
+  }
+};
+
+module.exports.resolve = async function (req, res) {
+  let postId = req.params.postId;
+
+  let post = await Post.findById(req.params.postId);
+  if (post.user._id.toString() === req.body._id) {
+    let a = await Post.updateOne({ _id: postId }, { $set: { doubt: false } });
+
+    if (a.acknowledged)
+      return res.json({
+        message: "Doubt resolved",
+        success: true,
+      });
   }
 };

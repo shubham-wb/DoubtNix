@@ -8,12 +8,12 @@ const passport = require("passport");
 
 commentsRouter.post(
   "/create",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   commentsController.create
 );
 commentsRouter.get(
   "/destroy/:id",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   commentsController.destroy
 );
 

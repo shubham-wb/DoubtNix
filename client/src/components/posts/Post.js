@@ -3,6 +3,9 @@ import "../../assets/css/post.css";
 import { useAuth, usePosts } from "../../hooks";
 import { toast, Toaster } from "react-hot-toast";
 function Posts(props) {
+  const { image, _id, content, user, doubt, comments } = props.data;
+
+  console.log(comments);
   let auth = useAuth();
   let post = usePosts();
   let [temp, settemp] = useState();
@@ -19,10 +22,21 @@ function Posts(props) {
         ...prevState.comment, // keep all other key-value pairs
         [name]: value,
 
-        post: props.data._id,
+        post: _id,
         // update the value of specific key
       },
     }));
+  };
+
+  const handleDoubtButton = async (id) => {
+    let response = await post.doubtResolve(id, auth.user);
+
+    if (response.success) {
+      toast.success("Doubt marked as resolved ");
+      settemp((temp = 0));
+    } else {
+      toast.error("cannot resolve Doubt ");
+    }
   };
 
   const handleDeleteButton = async (id) => {
@@ -76,23 +90,33 @@ function Posts(props) {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-
       <div className="post-container">
         <div className="post-content">
-          <div>{props.data.content}</div>
-          {props.data.user === auth.user._id ? (
+          <div>{content}</div>
+
+          {user === auth.user._id ? (
             <button
               onClick={() => {
-                handleDeleteButton(props.data._id);
+                handleDeleteButton(_id);
               }}
             >
               delete
             </button>
           ) : null}
+
+          {user === auth.user._id && doubt === true ? (
+            <button
+              onClick={() => {
+                handleDoubtButton(_id);
+              }}
+            >
+              Mark Resolved
+            </button>
+          ) : null}
         </div>
 
         <div className="image-container">
-          <img src={props.data.image}></img>
+          <img src={image}></img>
         </div>
         <div className="comment-container">
           <input
@@ -102,7 +126,7 @@ function Posts(props) {
             value={comment.content}
             onChange={handleChange}
           />
-          <input type="hidden" name="post" value={props.data._id} />
+          <input type="hidden" name="post" value={_id} />
           <button
             value="Comment"
             onClick={(e) => {
@@ -113,9 +137,11 @@ function Posts(props) {
           </button>
         </div>
         <div>
-          {props.data.comments.map((elem1) => {
-            return <div>{elem1}</div>;
-          })}
+          {comment.length != 0
+            ? comments.map((elem) => {
+                return <div>{elem.content}</div>;
+              })
+            : null}
         </div>
       </div>
     </>

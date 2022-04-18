@@ -11,6 +11,8 @@ postRouter.post(
 );
 postRouter.post("/destroy/:postId", postController.destroy);
 
+postRouter.post("/resolve/:postId", postController.resolve);
+
 postRouter.get(
   "/list",
   // passport.authenticate("jwt", { session: false }),

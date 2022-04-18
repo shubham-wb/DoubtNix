@@ -3,7 +3,7 @@ const Post = require("../models/post");
 
 module.exports.create = async function (req, res) {
   let post = await Post.findById(req.body.post);
-  console.log(post);
+
   if (post) {
     let comment = await Comment.create({
       content: req.body.content,
@@ -16,14 +16,13 @@ module.exports.create = async function (req, res) {
       }
     });
 
-    if (req.xhr) {
-      return res.status(200).json({
-        data: {
-          comment: comment,
-        },
-        message: "Comment created",
-      });
-    }
+    return res.status(200).json({
+      data: {
+        comment: comment,
+      },
+      success: true,
+      message: "Comment created",
+    });
   }
 };
 
