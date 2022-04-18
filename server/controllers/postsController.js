@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-
+const User = require("../models/user");
+const Teacher = require("../models/teacher");
 module.exports.read = async function (req, res) {
   try {
     let post = await Post.find({});
@@ -18,55 +19,72 @@ module.exports.read = async function (req, res) {
 
 module.exports.create = async function (req, res) {
   try {
-    let post = await Post.create({
-      content: req.body.content,
-      user: req.user._id,
-    });
+    let user = await User.findById(req.body.post.user._id);
 
-    if (req.xhr) {
-      // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it! (To display the user's name with the post added dynamically)
-      post = await post.populate("user", "name").execPopulate();
+    if (user) {
+      let post = await Post.create({
+        content: req.body.post.content,
+        user: req.body.post.user._id,
+        doubt: req.body.post.doubt,
+      });
+
+      user.posts.push(post);
+
+      user.save();
 
       return res.status(200).json({
         data: {
           post: post,
+          success: true,
         },
         message: "Post created!",
       });
-    }
+    } else if (!user) {
+      let teacher = await Teacher.findById(req.body.post.user._id);
 
-    return res.redirect("back");
+      let post = await Post.create({
+        content: req.body.post.content,
+        user: req.body.post.user._id,
+        doubt: req.body.post.doubt,
+      });
+      teacher.posts.push(post);
+      teacher.save();
+
+      return res.status(200).json({
+        data: {
+          post: post,
+          success: true,
+        },
+        message: "Post created!",
+      });
+    } else {
+      return res.json({
+        message: "unauthorized request",
+        success: false,
+      });
+    }
   } catch (err) {
-    req.flash("Error", err);
-    // added this to view the error on console as well
     console.log(err);
     return res.redirect("back");
   }
 };
 
 module.exports.destroy = async function (req, res) {
-  try {
-    let post = await Post.findById(req.params.id);
-    if (post.user == req.user.id) {
-      post.remove();
+  let post = await Post.findById(req.params.postId);
 
-      await Comment.deleteMany({ post: req.params.id });
+  if (post.user._id.toString() === req.body._id) {
+    console.log("yes");
+    post.remove();
 
-      if (req.xhr) {
-        return res.status(200).json({
-          data: {
-            post_id: req.params.id,
-          },
-          message: "Post deleted",
-        });
-      }
+    await Comment.deleteMany({ post: req.params.id });
 
-      return res.redirect("back");
-    } else {
-      return res.redirect("back");
-    }
-  } catch (err) {
-    req.flash("error", err);
+    return res.status(200).json({
+      data: {
+        post_id: req.params.id,
+      },
+      message: "Post deleted",
+    });
+  } else {
     return res.redirect("back");
   }
 };

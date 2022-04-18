@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/css/post.css";
+import { useAuth, usePosts } from "../../hooks";
+import { toast, Toaster } from "react-hot-toast";
 function Posts(props) {
+  let auth = useAuth();
+  let post = usePosts();
+  let [temp, settemp] = useState();
   let [comment, setComment] = useState({
     content: "",
     post: "",
@@ -13,10 +18,21 @@ function Posts(props) {
         // object that we want to update
         ...prevState.comment, // keep all other key-value pairs
         [name]: value,
+
         post: props.data._id,
         // update the value of specific key
       },
     }));
+  };
+
+  const handleDeleteButton = async (id) => {
+    let response = await post.deletePost(id, auth.user);
+    if (response.success) {
+      toast.success("post deleted ");
+      settemp((temp = 0));
+    } else {
+      toast.error("cannot delete post ");
+    }
   };
 
   const handleSubmit = (event) => {
@@ -58,35 +74,51 @@ function Posts(props) {
   // };
 
   return (
-    <div className="post-container">
-      <div className="post-content">{props.content} </div>
-      <div className="image-container">
-        <img src={props.data.image}></img>
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+
+      <div className="post-container">
+        <div className="post-content">
+          <div>{props.data.content}</div>
+          {props.data.user === auth.user._id ? (
+            <button
+              onClick={() => {
+                handleDeleteButton(props.data._id);
+              }}
+            >
+              delete
+            </button>
+          ) : null}
+        </div>
+
+        <div className="image-container">
+          <img src={props.data.image}></img>
+        </div>
+        <div className="comment-container">
+          <input
+            type="text"
+            name="content"
+            placeholder="Write a comment..."
+            value={comment.content}
+            onChange={handleChange}
+          />
+          <input type="hidden" name="post" value={props.data._id} />
+          <button
+            value="Comment"
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            Add comment
+          </button>
+        </div>
+        <div>
+          {props.data.comments.map((elem1) => {
+            return <div>{elem1}</div>;
+          })}
+        </div>
       </div>
-      <div className="comment-container">
-        <input
-          type="text"
-          name="content"
-          placeholder="Write a comment..."
-          value={comment.content}
-          onChange={handleChange}
-        />
-        <input type="hidden" name="post" value={props.data._id} />
-        <button
-          value="Comment"
-          onClick={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          Add comment
-        </button>
-      </div>
-      <div>
-        {props.data.comments.map((elem1) => {
-          return <div>{elem1}</div>;
-        })}
-      </div>
-    </div>
+    </>
   );
 }
 

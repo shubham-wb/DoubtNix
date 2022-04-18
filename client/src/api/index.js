@@ -103,8 +103,24 @@ export const updateCourse = (id, body) => {
   });
 };
 
+export const addPost = (content) => {
+  return customFetch(API_URLS.createPost(), {
+    method: "POST",
+    body: content,
+  });
+};
+
 export const getPosts = () => {
   return customFetch(API_URLS.getPosts(), {
     method: "GET",
+  });
+};
+
+export const removePost = (id, user) => {
+  console.log(user);
+  let url = API_URLS.removePost() + id;
+  return customFetch(url, {
+    method: "POST",
+    body: user,
   });
 };

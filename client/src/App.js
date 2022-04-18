@@ -25,7 +25,7 @@ const PrivateRoute = ({ children, ...rest }) => {
 const StuRoute = ({ children, ...rest }) => {
   const auth = useAuth();
   const role = auth.user.role;
-  return role === "student" ? <Outlet /> : <Navigate to="/dashboard/1" />;
+  return role === "Student" ? <Outlet /> : <Navigate to="/dashboard/1" />;
 };
 
 const TutRoute = ({ children, ...rest }) => {

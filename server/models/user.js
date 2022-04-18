@@ -8,7 +8,12 @@ const userSchema = mongoose.Schema({
     match: [/\S+@\S+\.\S+/, "is invalid"],
     unique: "Email already exists",
   },
-
+  posts: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Post",
+    },
+  ],
   username: {
     type: String,
     require: true,

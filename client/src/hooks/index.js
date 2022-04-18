@@ -13,6 +13,7 @@ import {
   deleteCourse,
   updateCourse,
   getPosts,
+  removePost,
 } from "../api";
 import {
   setItemInLocalStorage,
@@ -85,19 +86,6 @@ export const useProvideAuth = () => {
     //     };
     //   }
     // };
-    //   const signup = async (name, email, password, confirmPassword) => {
-    //     const response = await register(name, email, password, confirmPassword);
-
-    //     if (response.success) {
-    //       return {
-    //         success: true,
-    //       };
-    //     } else {
-    //       return {
-    //         success: false,
-    //         message: response.message,
-    //       };
-    //     }
   };
 
   const logout = () => {
@@ -270,10 +258,22 @@ export const useProvidePosts = () => {
   //     setPosts(newPosts);
   //   };
 
+  const deletePost = async (id, user) => {
+    let response = await removePost(id, user);
+    if (response.success) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
   return {
     posts,
     loading,
     addPostToState,
-    // addComment,
+    deletePost,
   };
 };
