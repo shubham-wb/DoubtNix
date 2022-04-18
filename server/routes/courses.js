@@ -3,13 +3,16 @@ const courseController = require("../controllers/courseController");
 const courseRouter = express.Router();
 const lessonController = require("../controllers/lessonController");
 const passport = require("passport");
-// courseRouter.put("/:courseId/publish", courseController.setPublish);
 
-//done
+courseRouter.patch("/publish/:courseId", courseController.PublishCourse);
+
+courseRouter.patch("/update/:courseId", courseController.UpdateCourse);
+
+courseRouter.delete("/delete/:courseId", courseController.DeleteCourse);
 
 courseRouter.get("/:courseId", courseController.CourseById);
 courseRouter.get(
-  "/list",
+  "/list/all",
   // passport.authenticate("jwt", { session: false }),
   courseController.read
 );

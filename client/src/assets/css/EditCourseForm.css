@@ -1,0 +1,68 @@
+.ecf-form-container {
+  height: 100vh;
+
+  width: 60%;
+  flex-direction: column;
+  background: white;
+  margin-left: 10%;
+  margin-top: 5%;
+  display: flex;
+}
+
+.ecf-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  background-color: orange;
+}
+
+.ecf-header {
+  height: 30%;
+  width: 80%;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+}
+.ecf-title {
+  height: 30%;
+  margin-top: 30px;
+  background-color: floralwhite;
+  width: 80%;
+}
+
+.ecf-mid {
+  background-color: green;
+  height: 30%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ecf-category {
+  height: 20%;
+  width: 100%;
+}
+.ecf-category input {
+  margin-top: 20px;
+  height: 80%;
+  width: 60%;
+}
+
+.ecf-foo {
+  padding-top: 30px;
+  height: 40%;
+  width: 80%;
+  display: flex;
+  background-color: blueviolet;
+}
+.ecf-foo div {
+  height: 100%;
+  width: 30%;
+}
+.ecf-foo input {
+  height: 60%;
+  width: 60%;
+}

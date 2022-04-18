@@ -10,6 +10,9 @@ const initialState = {
   addLesson: () => {},
   myCourses: () => {},
   getCourseById: () => {},
+  publishMyCourse: () => {},
+  deleteOne: () => {},
+  updateTutCourse: () => {},
 };
 
 export const CoursesContext = createContext(initialState);

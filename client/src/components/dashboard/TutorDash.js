@@ -8,6 +8,7 @@ import MyCourses from "./TutorDashboard/MyCourses";
 import CreateLesson from "./TutorDashboard/CreateLesson";
 import EditCourse from "./TutorDashboard/EditCourse";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import EditCourseForm from "../course/EditCourseForm";
 function TutorDashboard() {
   return (
     <div className="t-dashboard">
@@ -31,6 +32,11 @@ function TutorDashboard() {
               exact
               path="/course/edit/:id/lesson/create"
               element={<CreateLesson />}
+            ></Route>
+            <Route
+              exact
+              path="/course/edit/:id/1"
+              element={<EditCourseForm />}
             ></Route>
           </Routes>
         </div>

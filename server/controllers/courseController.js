@@ -18,14 +18,9 @@ module.exports.create = async (req, res) => {
   }
 };
 
-module.exports.photo = () => {};
-
-module.exports.defaultPhoto = () => {};
-
-module.exports.newLesson = () => {};
-
 module.exports.read = async (req, res) => {
   let course = await Course.find({});
+  console.log(course);
   if (course) {
     return res.json({
       data: course,
@@ -47,31 +42,65 @@ module.exports.listMyCourses = async (req, res) => {
     .sort("-createdAt")
     .populate("courses");
 
-  console.log(teacher.courses);
   return res.json({
     data: teacher.courses,
     message: "courses listed succesfully",
   });
 };
 
-module.exports.update = () => {};
-
-module.exports.remove = () => {};
-
 module.exports.CourseById = async (req, res) => {
   let CourseId = req.params;
 
-  const corse = await Course.findById(CourseId.CourseId)
+  const corse = await Course.findById(CourseId.courseId)
     .sort("-createdAt")
     .populate("lessons");
 
-  console.log(corse.lessons);
   return res.json({
-    data: corse.lessons,
+    data: corse,
     message: "lessons listed succesfully",
   });
 };
 
-module.exports.userByID = () => {};
+module.exports.PublishCourse = async (req, res) => {
+  let courseId = req.params;
+  await Course.updateOne(
+    { _id: courseId.courseId },
+    { $set: { published: true } }
+  );
+};
 
-module.exports.listPublished = () => {};
+module.exports.UpdateCourse = async (req, res) => {
+  console.log("req.params", req.params);
+  console.log("body", req.body);
+
+  let courseId = req.params;
+
+  await Course.findByIdAndUpdate(
+    { _id: courseId.courseId },
+    {
+      name: req.body.updateCourse.name,
+      description: req.body.updateCourse.description,
+      category: req.body.updateCourse.category,
+    }
+  )
+    .then(() => {
+      return res.json({
+        message: "updated succesfully ",
+        success: true,
+      });
+    })
+    .catch((err) => {
+      console.log(err, "error in updating course ");
+    });
+};
+
+module.exports.DeleteCourse = async (req, res) => {
+  let courseId = req.params;
+  await Course.deleteOne({ _id: courseId.courseId })
+    .then(function () {
+      console.log("Data deleted"); // Success
+    })
+    .catch(function (error) {
+      console.log(error); // Failure
+    });
+};

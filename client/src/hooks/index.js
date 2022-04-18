@@ -8,6 +8,10 @@ import {
   listAllCourses as getCourses,
   addCourse as newCourse,
   listMyCourses,
+  publishMyCourse,
+  publishCourse,
+  deleteCourse,
+  updateCourse,
 } from "../api";
 import {
   setItemInLocalStorage,
@@ -161,11 +165,9 @@ export const useProvideCourses = () => {
     }
   };
 
-
-  
-  const getCourseById= (id) => {
-     const response = await getCourse(id);
-
+  const getCourseById = async (id) => {
+    const response = await getCourse(id);
+    console.log(response);
     if (response) {
       return {
         data: response.data.data,
@@ -176,14 +178,54 @@ export const useProvideCourses = () => {
         success: false,
       };
     }
-  
-  }
+  };
+
+  const publishMyCourse = async (id) => {
+    const response = await publishCourse(id);
+    console.log(response);
+    if (response) {
+      return {
+        // data: response.data.data,
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
+
+  const deleteOne = async (id) => {
+    const response = await deleteCourse(id);
+    if (response) {
+      return {
+        success: true,
+      };
+    } else {
+      return { success: false };
+    }
+  };
+
+  const updateTutCourse = async (id, body) => {
+    const response = await updateCourse(id, body);
+    if (response) {
+      return {
+        success: true,
+      };
+    } else {
+      return { success: false };
+    }
+  };
+
   return {
+    updateTutCourse,
+    publishMyCourse,
     listAllCourses,
     courses,
     addCourse,
     myCourses,
     getCourseById,
+    deleteOne,
   };
 };
 

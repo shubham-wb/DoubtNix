@@ -79,3 +79,26 @@ export const getCourse = (id) => {
     method: "GET",
   });
 };
+
+export const publishCourse = (id) => {
+  let url = API_URLS.publishCourse() + id;
+
+  return customFetch(url, {
+    method: "PATCH",
+  });
+};
+
+export const deleteCourse = (id) => {
+  let url = API_URLS.deleteCourse() + id;
+  return customFetch(url, {
+    method: "DELETE",
+  });
+};
+
+export const updateCourse = (id, body) => {
+  let url = API_URLS.updateCourse() + id;
+  return customFetch(url, {
+    method: "PATCH",
+    body: body,
+  });
+};
