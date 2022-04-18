@@ -12,7 +12,9 @@ const initialState = {
 export const PostsContext = createContext(initialState);
 
 export const PostsProvider = ({ children }) => {
-  // const posts = useProvidePosts();
+  const posts = useProvidePosts();
 
-  return <PostsContext.Provider value="">{children}</PostsContext.Provider>;
+  return (
+    <PostsContext.Provider value={posts}>{children}</PostsContext.Provider>
+  );
 };

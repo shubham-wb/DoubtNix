@@ -1,5 +1,6 @@
 const Course = require("../models/course");
 const Teacher = require("../models/teacher");
+const Lesson = require("../models/lesson");
 module.exports.create = async (req, res) => {
   let teacher = await Teacher.findById(req.body.instructor);
 
@@ -95,12 +96,19 @@ module.exports.UpdateCourse = async (req, res) => {
 };
 
 module.exports.DeleteCourse = async (req, res) => {
-  let courseId = req.params;
-  await Course.deleteOne({ _id: courseId.courseId })
-    .then(function () {
-      console.log("Data deleted"); // Success
-    })
-    .catch(function (error) {
-      console.log(error); // Failure
-    });
+  try {
+    let courseId = req.params;
+    let course = await Course.findById(courseId.courseId);
+    await Lesson.deleteMany({ course: courseId.courseId });
+    post.remove();
+
+    return res.json({ message: "post deleted", success: true });
+  } catch {
+    (error) => {
+      return res.json({
+        message: "cannot delete course",
+        success: false,
+      });
+    };
+  }
 };

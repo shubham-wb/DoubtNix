@@ -11,6 +11,7 @@ export const API_URLS = {
   publishCourse: () => `${API_ROOT}/courses/publish/`,
   deleteCourse: () => `${API_ROOT}/courses/delete/`,
   updateCourse: () => `${API_ROOT}/courses/update/`,
+  getPosts: () => `${API_ROOT}/posts/list`,
 };
 
 export const LOCALSTORAGE_TOKEN_KEY = "token";

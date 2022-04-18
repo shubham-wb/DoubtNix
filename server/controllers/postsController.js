@@ -8,6 +8,7 @@ module.exports.read = async function (req, res) {
       return res.json({
         data: post,
         message: "posts found succesfully",
+        success: true,
       });
     }
   } catch (err) {

@@ -102,3 +102,9 @@ export const updateCourse = (id, body) => {
     body: body,
   });
 };
+
+export const getPosts = () => {
+  return customFetch(API_URLS.getPosts(), {
+    method: "GET",
+  });
+};

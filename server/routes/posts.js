@@ -17,7 +17,7 @@ postRouter.get(
 
 postRouter.get(
   "/list",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   postController.read
 );
 

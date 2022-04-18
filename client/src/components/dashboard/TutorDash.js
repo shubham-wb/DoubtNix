@@ -9,6 +9,7 @@ import CreateLesson from "./TutorDashboard/CreateLesson";
 import EditCourse from "./TutorDashboard/EditCourse";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import EditCourseForm from "../course/EditCourseForm";
+import Doubts from "./TutorDashboard/Doubts";
 function TutorDashboard() {
   return (
     <div className="t-dashboard">
@@ -18,6 +19,7 @@ function TutorDashboard() {
         <div className="t-wrapper">
           <Routes>
             <Route exact path="/" element={<Courses />}></Route>
+            <Route exact path="/doubts" element={<Doubts />}></Route>
             <Route exact path="/my-courses" element={<></>}></Route>
             <Route exact path="/article/create" element={<></>}></Route>
             <Route exact path="/doubts" element={<></>}></Route>

@@ -1,10 +1,13 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 function TutNav() {
   return (
     <nav id="t-nav">
       <ul>
-        <li>Doubts</li>
+        <Link to="/dashboard/1/doubts">
+          <li>Doubts</li>
+        </Link>
         <li>DashBoard</li>
         <li>Messages</li>
         <li>Account</li>
@@ -13,4 +16,4 @@ function TutNav() {
   );
 }
 
-export default TutNav
+export default TutNav;
