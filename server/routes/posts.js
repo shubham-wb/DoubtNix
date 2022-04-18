@@ -15,4 +15,10 @@ postRouter.get(
   postController.destroy
 );
 
+postRouter.get(
+  "/list",
+  passport.authenticate("jwt", { session: false }),
+  postController.read
+);
+
 module.exports = postRouter;

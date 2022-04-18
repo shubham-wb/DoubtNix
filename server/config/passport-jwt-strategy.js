@@ -4,21 +4,22 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const User = require("../models/user");
 
 let opts = {
-  jwtFromRequest: ExtractJwt.fromHeader("x-auth-token"),
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "doubtnix",
 };
 
 passport.use(
   new JWTStrategy(opts, (jwt_payload, done) => {
-    console.log(jwt_payload, "mai chla bhi ");
-
-    User.findById(jwt_payload.id)
-      .then((user) => {
-        if (user) {
-          return done(null, user);
-        }
+    User.findOne({ id: jwt_payload._id }, function (err, user) {
+      if (err) {
+        return done(err, false);
+      }
+      if (user) {
+        return done(null, user);
+      } else {
         return done(null, false);
-      })
-      .catch((err) => console.log(err));
+        // or you could create a new account
+      }
+    });
   })
 );

@@ -3,12 +3,8 @@ const cors = require("cors");
 const port = 8000;
 const app = express();
 
-//for authentication
-
-const passport = require("passport");
-require("./config/passport-jwt-strategy");
-
 const db = require("./config/mongoose");
+const passport = require("passport");
 
 app.use(express.json()); // to parse JSON bodies
 
@@ -16,9 +12,13 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 app.use(cors());
 
-app.use(passport.initialize());
+//for authentication
+
+require("./config/passport-jwt-strategy");
 
 app.use("/", require("./routes"));
+
+app.use(passport.initialize());
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 

@@ -8,7 +8,7 @@ const customFetch = async (url, { body, ...customConfig }) => {
   };
 
   if (token) {
-    headers["x-auth-token"] = token;
+    headers.Authorization = `Bearer ${token}`;
   }
 
   const config = {
@@ -22,9 +22,9 @@ const customFetch = async (url, { body, ...customConfig }) => {
   if (body) {
     config.body = JSON.stringify(body);
   }
+  console.log(config, url);
 
   try {
-    console.log(config, url);
     const response = await fetch(url, config);
     const data = await response.json();
 

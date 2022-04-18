@@ -1,6 +1,20 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 
+module.exports.read = async function (req, res) {
+  try {
+    let post = await Post.find({});
+    if (post) {
+      return res.json({
+        data: post,
+        message: "posts found succesfully",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports.create = async function (req, res) {
   try {
     let post = await Post.create({

@@ -5,11 +5,9 @@ function StudentDash() {
   useEffect(() => {
     const getAPI = async () => {
       const response = await fetch("http://localhost:8000/posts/list");
-      const data = await response.json();
+      const res = await response.json();
       try {
-        console.log(data);
-        const { posts } = data;
-        setPostList((postList = posts));
+        setPostList((postList = res.data));
       } catch (error) {
         console.log(error);
       }
