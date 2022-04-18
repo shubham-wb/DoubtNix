@@ -5,14 +5,18 @@ const jwt = require("jsonwebtoken");
 module.exports.createSession = async function (req, res) {
   console.log(req.body);
   try {
-    let user = await Teacher.findOne({ email: req.body.email });
+    let faculty = await Teacher.findOne({ email: req.body.email });
 
-    console.log(user);
+    if (!faculty || faculty.password != req.body.password) {
+      var user = await User.findOne({ email: req.body.email });
 
-    if (!user || user.password != req.body.password) {
-      return res.json(422, {
-        message: "Invalid Username/Password",
-      });
+      if (!user || user.password != req.body.password) {
+        return res.json(422, {
+          message: "Invalid Username/Password",
+        });
+      }
+    } else {
+      user = faculty;
     }
     const token = jwt.sign(user.toJSON(), "doubtnix", {
       expiresIn: "100000",

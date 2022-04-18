@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { usePosts } from "../../../hooks";
+import { usePosts } from "../../hooks";
 
 const Doubts = () => {
   let posts = usePosts();

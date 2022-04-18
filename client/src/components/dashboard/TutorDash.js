@@ -9,7 +9,7 @@ import CreateLesson from "./TutorDashboard/CreateLesson";
 import EditCourse from "./TutorDashboard/EditCourse";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import EditCourseForm from "../course/EditCourseForm";
-import Doubts from "./TutorDashboard/Doubts";
+import Doubts from "../posts/Doubts";
 function TutorDashboard() {
   return (
     <div className="t-dashboard">
