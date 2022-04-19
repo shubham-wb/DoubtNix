@@ -4,11 +4,13 @@ import { useProvidePosts } from "../hooks";
 
 const initialState = {
   posts: [],
+  users: [],
   loading: true,
   addPostToState: () => {},
   addComment: () => {},
   deletePost: () => {},
   doubtResolve: () => {},
+  deleteComment: () => {},
 };
 
 export const PostsContext = createContext(initialState);

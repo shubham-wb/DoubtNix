@@ -1,6 +1,13 @@
 const User = require("../models/user");
 const Teacher = require("../models/teacher");
 const jwt = require("jsonwebtoken");
+module.exports.read = async (req, res) => {
+  let id = req.body.id;
+  let user = await User.findById(id);
+  if (user) {
+    return res.status(200).json({ user: user.name });
+  }
+};
 
 module.exports.createSession = async function (req, res) {
   console.log(req.body);

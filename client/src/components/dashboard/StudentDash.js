@@ -3,17 +3,16 @@ import "../../assets/css/uDashboard.css";
 import { usePosts } from "../../hooks";
 import CreatePost from "../posts/createPost";
 import Post from "../posts/Post";
-function StudentDash(props) {
+function StudentDash() {
   let post = usePosts();
   let [postList, setPostList] = useState();
-  let [temp, setTemp] = useState();
+
+  async function getAPI() {
+    let response = await post.posts;
+    setPostList((postList = response));
+  }
 
   useEffect(() => {
-    async function getAPI() {
-      let response = await post.posts;
-
-      setPostList((postList = response.data));
-    }
     getAPI();
   });
 
@@ -30,7 +29,7 @@ function StudentDash(props) {
 
       <div className="u-main">
         <div className="u-feed">
-          <CreatePost data={(setTemp, temp)} />
+          <CreatePost data={getAPI()} />
           <div className="posts-container">
             {postList
               ? postList.map((elem) => {

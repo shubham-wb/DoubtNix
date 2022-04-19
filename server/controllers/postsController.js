@@ -4,15 +4,15 @@ const User = require("../models/user");
 const Teacher = require("../models/teacher");
 module.exports.read = async function (req, res) {
   try {
-    let post = await Post.find({})
-      .sort("-createdAt")
-      .populate({ path: "comments", model: "Comment" });
+    let post = await Post.find({}).sort("-createdAt").populate("comments");
 
-    console.log(post);
+    let all_users = await User.find({});
+
     if (post) {
       return res.json({
         data: post,
         message: "posts found succesfully",
+        users: all_users,
         success: true,
       });
     }
@@ -78,6 +78,10 @@ module.exports.destroy = async function (req, res) {
 
   if (post.user._id.toString() === req.body._id) {
     post.remove();
+
+    let user = User.findByIdAndUpdate(post.user._id.toString(), {
+      $pull: { posts: req.params.postId },
+    });
 
     await Comment.deleteMany({ post: req.params.id });
 

@@ -3,9 +3,13 @@ const Teacher = require("../models/teacher");
 const Lesson = require("../models/lesson");
 module.exports.create = async (req, res) => {
   let teacher = await Teacher.findById(req.body.instructor);
-
+  console.log(req);
   if (teacher) {
-    let course = await Course.create(req.body);
+    let course = await Course.create({
+      content: req.body.content,
+      post: req.body.post,
+      user: req.body.user,
+    });
     teacher.courses.push(course);
     teacher.save((err, use) => {
       if (err) {

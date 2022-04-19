@@ -1,4 +1,7 @@
 const express = require("express");
+
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const courseController = require("../controllers/courseController");
 const courseRouter = express.Router();
 const lessonController = require("../controllers/lessonController");
@@ -18,6 +21,7 @@ courseRouter.get(
 );
 courseRouter.post(
   "/create",
+  upload.single("image"),
   // passport.authenticate("jwt", { session: false }),
   courseController.create
 );

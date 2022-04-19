@@ -18,7 +18,7 @@ import Loader from "./loader";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
-  console.log(auth);
+
   return auth ? <Outlet /> : <Navigate to="/login" />;
 };
 

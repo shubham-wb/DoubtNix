@@ -1,4 +1,4 @@
-import { API_URLS, getFormBody, LOCALSTORAGE_TOKEN_KEY } from "../utils";
+import { API_URLS, LOCALSTORAGE_TOKEN_KEY } from "../utils";
 
 const customFetch = async (url, { body, ...customConfig }) => {
   const token = window.localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
@@ -134,12 +134,14 @@ export const resolveDoubt = (id, user) => {
   });
 };
 
-export const createComment = async (content, postId) => {
-  return customFetch(API_URLS.comment(), {
+export const removeComment = (id, user_id, post_id) => {
+  let url = API_URLS.removeComment();
+  return customFetch(url, {
     method: "POST",
     body: {
-      post_id: postId,
-      content,
+      id: id,
+      userId: user_id,
+      post_id: post_id,
     },
   });
 };

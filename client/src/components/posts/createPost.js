@@ -29,8 +29,10 @@ const CreatePost = (props) => {
 
   const handleSubmit = async () => {
     const response = await addPost(post);
-    console.log(response);
+
     if (response.success) {
+      posts.addPostToState(response.data.post);
+
       setPost(
         (post = {
           content: "",
@@ -39,10 +41,7 @@ const CreatePost = (props) => {
         })
       );
       setIsChecked((isChecked = false));
-
       toast.success("post created successfully");
-      posts.addPostToState(response.data.post);
-      props.data.setTemp((props.data.temp = 0));
     } else {
       toast.error("cannot create post");
     }

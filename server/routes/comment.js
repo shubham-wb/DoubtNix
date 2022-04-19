@@ -11,8 +11,8 @@ commentsRouter.post(
   // passport.authenticate("jwt", { session: false }),
   commentsController.create
 );
-commentsRouter.get(
-  "/destroy/:id",
+commentsRouter.post(
+  "/destroy",
   // passport.authenticate("jwt", { session: false }),
   commentsController.destroy
 );

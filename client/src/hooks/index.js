@@ -3,6 +3,7 @@ import jwt from "jwt-decode";
 
 import { AuthContext, PostsContext, CoursesContext } from "../providers";
 import {
+  removeComment,
   getCourse,
   login as userLogin,
   listAllCourses as getCourses,
@@ -14,7 +15,6 @@ import {
   getPosts,
   removePost,
   resolveDoubt,
-  createComment,
 } from "../api";
 import {
   setItemInLocalStorage,
@@ -128,7 +128,7 @@ export const useProvideCourses = () => {
 
   const addCourse = async (values) => {
     const response = await newCourse(values);
-    console.log(response, "response");
+
     if (response) {
       return {
         success: true,
@@ -157,7 +157,7 @@ export const useProvideCourses = () => {
 
   const getCourseById = async (id) => {
     const response = await getCourse(id);
-    console.log(response);
+
     if (response) {
       return {
         data: response.data.data,
@@ -172,7 +172,7 @@ export const useProvideCourses = () => {
 
   const publishMyCourse = async (id) => {
     const response = await publishCourse(id);
-    console.log(response);
+
     if (response) {
       return {
         // data: response.data.data,
@@ -225,6 +225,7 @@ export const usePosts = () => {
 
 export const useProvidePosts = () => {
   let [posts, setPosts] = useState([]);
+  let [users, setUsers] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -233,7 +234,8 @@ export const useProvidePosts = () => {
       const response = await getPosts();
 
       if (response.success) {
-        setPosts((posts = response.data));
+        setPosts((posts = response.data.data));
+        setUsers((users = response.users.users));
       }
 
       setLoading(false);
@@ -243,12 +245,11 @@ export const useProvidePosts = () => {
 
   const addPostToState = (post) => {
     const newPosts = [post, ...posts];
-
-    setPosts(newPosts);
+    setPosts((posts = newPosts));
+    return posts;
   };
 
   const addComment = async (comment, postId) => {
-    let response = await createComment(comment, postId);
     const newPosts = posts.map((post) => {
       if (post._id === postId) {
         return { ...post, comments: [...post.comments, comment] };
@@ -284,9 +285,24 @@ export const useProvidePosts = () => {
       };
     }
   };
+
+  const deleteComment = async (id, user_id, post_id) => {
+    let response = await removeComment(id, user_id, post_id);
+
+    if (response.message) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  };
   return {
     posts,
     loading,
+    deleteComment,
     addPostToState,
     deletePost,
     doubtResolve,
