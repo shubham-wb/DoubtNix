@@ -3,11 +3,11 @@ import "../../assets/css/tDashBoard.css";
 import TutAside from "./TutorDashboard/TutAside";
 import TutNav from "./TutorDashboard/TutNav";
 import CreateCourse from "../course/CreateCourse";
-import Courses from "./TutorDashboard/Courses";
+import Courses from "../course/Courses";
 import MyCourses from "./TutorDashboard/MyCourses";
 import CreateLesson from "./TutorDashboard/CreateLesson";
 import EditCourse from "./TutorDashboard/EditCourse";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import EditCourseForm from "../course/EditCourseForm";
 import Doubts from "../posts/Doubts";
 function TutorDashboard() {
@@ -22,7 +22,7 @@ function TutorDashboard() {
             <Route exact path="/doubts" element={<Doubts />}></Route>
             <Route exact path="/my-courses" element={<></>}></Route>
             <Route exact path="/article/create" element={<></>}></Route>
-            <Route exact path="/doubts" element={<></>}></Route>
+            <Route exact path="/doubts" element={<Doubts />}></Route>
             <Route exact path="/course/new" element={<CreateCourse />}></Route>
             <Route exact path="/course/:id" element={<MyCourses />}></Route>
             <Route

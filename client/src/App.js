@@ -6,6 +6,7 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
+import Home from "./pages/Home";
 import FacultySignUp from "./components/credentials/FacultySignUp";
 import UserSignUp from "./components/credentials/UserSignup";
 import StudentDash from "./components/dashboard/StudentDash";
@@ -47,6 +48,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />}></Route>
         <Route
           path="/signup/faculty"
           element={
@@ -67,7 +69,7 @@ export const App = () => {
         />
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/dashboard" element={<StuRoute />}>
-            <Route path="/dashboard/0" element={<StudentDash />}></Route>
+            <Route path="/dashboard/0/*" element={<StudentDash />}></Route>
           </Route>
           <Route path="/dashboard/" element={<TutRoute />}>
             <Route path="/dashboard/1/*" element={<TutorDash />}></Route>

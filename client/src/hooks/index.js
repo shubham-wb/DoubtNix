@@ -225,7 +225,6 @@ export const usePosts = () => {
 
 export const useProvidePosts = () => {
   let [posts, setPosts] = useState([]);
-  let [users, setUsers] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -235,7 +234,6 @@ export const useProvidePosts = () => {
 
       if (response.success) {
         setPosts((posts = response.data.data));
-        setUsers((users = response.users.users));
       }
 
       setLoading(false);

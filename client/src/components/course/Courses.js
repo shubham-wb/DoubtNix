@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useCourses } from "../../../hooks";
-import { CoursesContext } from "../../../providers/index";
+import { useCourses } from "../../hooks";
+import { CoursesContext } from "../../providers/index";
 function Courses() {
   let [courses, setCourses] = useState();
   const course = useCourses();

@@ -1,46 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../../assets/css/uDashboard.css";
-import { usePosts } from "../../hooks";
-import CreatePost from "../posts/createPost";
-import Post from "../posts/Post";
-function StudentDash() {
-  let post = usePosts();
-  let [postList, setPostList] = useState();
+import StudentDashboard from "../dashboard/studentDashboard/studentDashboard";
+import StudentNav from "./studentDashboard/StudentNav";
+import Doubts from "../posts/Doubts";
+import { Routes, Route } from "react-router-dom";
+import Courses from "../course/Courses";
 
-  async function getAPI() {
-    let response = await post.posts;
-    setPostList((postList = response));
-  }
-
-  useEffect(() => {
-    getAPI();
-  });
-
+const StudentDash = () => {
   return (
     <div className="u-dashboard">
-      <nav id="u-nav">
-        <ul>
-          <li>Home</li>
-          <li>Courses</li>
-          <li>Doubts</li>
-          <li>Profile</li>
-        </ul>
-      </nav>
-
-      <div className="u-main">
-        <div className="u-feed">
-          <CreatePost data={getAPI()} />
-          <div className="posts-container">
-            {postList
-              ? postList.map((elem) => {
-                  return <Post data={elem} />;
-                })
-              : null}
-          </div>
-        </div>
-        <div className="u-side-panel"></div>
-      </div>
+      <StudentNav />
+      <Routes>
+        <Route exact path="/" element={<StudentDashboard />}></Route>
+        <Route exact path="/doubts" element={<Doubts />}></Route>
+        <Route exact path="/courses" element={<Courses />}></Route>
+      </Routes>
     </div>
   );
-}
+};
+
 export default StudentDash;
