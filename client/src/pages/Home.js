@@ -50,7 +50,7 @@ function Home() {
               <div class="message">
                 <div class="word1">Ask from Experts</div>
                 <div class="word2">Delete it</div>
-                <div class="word3">Share it</div>
+                <div class="word3">Share it...</div>
               </div>
             </h1>
           </div>

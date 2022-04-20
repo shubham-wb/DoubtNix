@@ -175,11 +175,11 @@ navbar {
   }
   48% {
     top: -40px;
-    width: 150px;
+    width: 190px;
   }
   62% {
     top: -40px;
-    width: 150px;
+    width: 190px;
   }
   66% {
     top: -40px;
@@ -187,20 +187,19 @@ navbar {
     text-indent: 0;
   }
   71% {
-    top: -80px;
-    width: 0;
+    top: -75px;
     text-indent: 5px;
   }
   86% {
-    top: -80px;
-    width: 150px;
+    top: -75px;
+    width: 190px;
   }
   95% {
-    top: -80px;
-    width: 150px;
+    top: -75px;
+    width: 190px;
   }
   98% {
-    top: -80px;
+    top: -75px;
     width: 0;
     text-indent: 5px;
   }
