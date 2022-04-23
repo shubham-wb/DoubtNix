@@ -1,0 +1,41 @@
+.carousel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80%;
+  width: 900px;
+}
+
+.f-cards-wrapper {
+  overflow: hidden;
+
+  position: relative;
+  height: 90%;
+  width: 900px;
+  padding: 0px;
+}
+
+.f-card-wrapper {
+  position: absolute;
+}
+
+.f-cards-wrapper li:nth-child(1) {
+  top: 0px;
+  left: 0px;
+}
+.f-cards-wrapper li:nth-child(2) {
+  top: 0px;
+  left: 440px;
+}
+.f-cards-wrapper li:nth-child(3) {
+  top: 0px;
+  left: 860px;
+}
+.f-cards-wrapper li:nth-child(4) {
+  top: 0px;
+  left: 1280px;
+}
+
+.f-cards-wrapper li {
+  transition: transform ease-in-out 0.5s;
+}

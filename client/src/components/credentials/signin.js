@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import Button from "@mui/material/Button";
 import toast, { Toaster } from "react-hot-toast";
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -36,36 +37,135 @@ const SignIn = () => {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-
-      <span>Log In</span>
-
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <button
-          disabled={loggingIn}
-          onClick={(e) => {
-            handleSubmit(e);
+      <div
+        id="login-box"
+        style={{
+          paddingLeft: "20px",
+          height: "300px",
+          width: "250px",
+          backgroundColor: "whitesmoke",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <h1 style={{ height: "10%", width: "100%", fontSize: "1.4rem" }}>
+          Log In
+        </h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "white",
+            height: "15%",
+            width: "80%",
+            marginTop: "20px",
+            padding: "0px 10px",
+            display: "flex",
+            flexDirection: "row",
           }}
         >
-          {loggingIn ? "Logging in..." : "Log In"}
-        </button>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/646/646094.png"
+            style={{
+              height: "45%",
+              width: "10%",
+              marginRight: "15px",
+            }}
+          ></img>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div
+          style={{
+            padding: "0px 10px",
+
+            backgroundColor: "white",
+            marginTop: "20px",
+            alignItems: "center",
+            height: "15%",
+            width: "80%",
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+            style={{
+              height: "45%",
+              width: "10%",
+              marginRight: "15px",
+            }}
+          ></img>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <div
+          style={{
+            marginTop: "10px",
+            height: "12%",
+            width: "26%",
+          }}
+        >
+          <Button
+            style={{
+              textTransform: "none",
+              color: "white",
+              height: "100%",
+              width: "100%",
+              backgroundColor: "#058cf0e3",
+            }}
+            disabled={loggingIn}
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            {loggingIn ? "Login" : "Login"}
+          </Button>
+        </div>
+        <hr
+          style={{
+            marginTop: "10px",
+            marginBottom: "10px",
+            width: "85%",
+
+            background: "black",
+          }}
+        />
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "12px",
+              marginBottom: "10px",
+              color: "#058cf0e3",
+            }}
+          >
+            New User ? <Link to="">Signup</Link>
+          </div>
+          <div
+            style={{
+              fontSize: "12px",
+              marginBottom: "10px",
+              color: "#058cf0e3",
+              marginLeft: "80px",
+            }}
+          >
+            Faculty Signup
+          </div>
+        </div>
       </div>
     </>
   );
