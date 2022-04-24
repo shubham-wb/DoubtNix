@@ -1,53 +1,38 @@
-import { useState } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import Button from "@mui/material/Button";
 import toast, { Toaster } from "react-hot-toast";
 const SignIn = () => {
+  let navigate = useNavigate();
+  const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
-  const auth = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoggingIn(true);
-
     if (!email || !password) {
+      setLoggingIn(false);
       return toast.error("Please add both email and password");
     }
     const response = await auth.login(email, password);
+    console.log(response);
     if (response.success) {
       toast.success("signed in successfully");
-      console.log(response.data);
+      navigate("/dashboard/0", { replace: true });
     } else {
       toast.error("Umm ! we cannot log you in ");
+      setLoggingIn(false);
     }
     setLoggingIn(false);
   };
 
-  if (auth.user) {
-    if (auth.user.role === "student") {
-      return <Navigate to="/dashboard/0" />;
-    } else if (auth.user.role === "teacher") {
-      return <Navigate to="/dashboard/1" />;
-    }
-  }
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <div
-        id="login-box"
-        style={{
-          paddingLeft: "20px",
-          height: "300px",
-          width: "250px",
-          backgroundColor: "whitesmoke",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div id="login-box">
         <h1 style={{ height: "10%", width: "100%", fontSize: "1.4rem" }}>
           Log In
         </h1>
@@ -121,7 +106,8 @@ const SignIn = () => {
               textTransform: "none",
               color: "white",
               height: "100%",
-              width: "100%",
+              width: "auto",
+              padding: "5px",
               backgroundColor: "#058cf0e3",
             }}
             disabled={loggingIn}
@@ -129,7 +115,19 @@ const SignIn = () => {
               handleSubmit(e);
             }}
           >
-            {loggingIn ? "Login" : "Login"}
+            {loggingIn ? (
+              <>
+                Login
+                <div className="loader">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </>
+            ) : (
+              "Login"
+            )}
           </Button>
         </div>
         <hr
@@ -153,7 +151,7 @@ const SignIn = () => {
               color: "#058cf0e3",
             }}
           >
-            New User ? <Link to="">Signup</Link>
+            New User ? <Link to="/signup/student">Signup</Link>
           </div>
           <div
             style={{
@@ -163,7 +161,7 @@ const SignIn = () => {
               marginLeft: "80px",
             }}
           >
-            Faculty Signup
+            <Link to="/signup/faculty">Faculty Signup</Link>
           </div>
         </div>
       </div>

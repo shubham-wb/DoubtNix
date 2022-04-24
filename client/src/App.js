@@ -19,20 +19,28 @@ import Loader from "./loader";
 
 const PrivateRoute = ({ children, ...rest }) => {
   const auth = useAuth();
-
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  return auth ? <Outlet /> : <Navigate to="/" />;
 };
 
 const StuRoute = ({ children, ...rest }) => {
   const auth = useAuth();
-  const role = auth.user.role;
-  return role === "Student" ? <Outlet /> : <Navigate to="/dashboard/1" />;
+  if (auth.user === undefined) {
+    window.location.reload();
+  } else {
+    const role = auth.user.role;
+
+    return role === "Student" ? <Outlet /> : <Navigate to="/dashboard/1" />;
+  }
 };
 
 const TutRoute = ({ children, ...rest }) => {
   const auth = useAuth();
-  const role = auth.user.role;
-  return role === "Teacher" ? <Outlet /> : <Navigate to="/dashboard/0" />;
+  if (auth.user === undefined) {
+    window.location.reload();
+  } else {
+    const role = auth.user.role;
+    return role === "Teacher" ? <Outlet /> : <Navigate to="/dashboard/0" />;
+  }
 };
 
 const Page404 = () => {

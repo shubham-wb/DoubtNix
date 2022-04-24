@@ -20,7 +20,9 @@ import chat from "../assets/images/chat.svg";
 import { Link } from "react-router-dom";
 import bg from "../assets/images/bg12.png";
 import Login from "../components/credentials/SignIn";
+import { useAuth } from "../hooks";
 function Home() {
+  let auth = useAuth();
   let [login, setLogin] = useState(false);
   let courses = [
     {
@@ -29,21 +31,18 @@ function Home() {
         "https://img-cdn.inc.com/image/upload/w_1920,h_1080,c_fill/images/panoramic/getty_1075599562_hpy86b.jpg",
       numberOfCourses: "250+",
     },
-
     {
       name: "Web Development",
       image:
         "https://linkconsulting.com/wp-content/uploads/2019/09/cloud-apps-1200x675.jpg",
       numberOfCourses: "100+",
     },
-
     {
       name: "Data Science",
       image:
         "https://www.northeastern.edu/graduate/blog/wp-content/uploads/2020/06/iStock-1221293664-1.jpg",
       numberOfCourses: "70+",
     },
-
     {
       name: "Product Development",
       image:
@@ -53,12 +52,17 @@ function Home() {
   ];
   let [next, setNext] = useState(0);
   let [value, setValue] = useState(1);
+
   if (login) {
     let loginBtn = document.getElementById("login-box");
-    loginBtn.style.height = "300px";
+    if (loginBtn != undefined) {
+      loginBtn.style.height = "300px";
+    }
   } else if (login === false) {
     let loginBtn = document.getElementById("login-box");
-    loginBtn.style.height = "0px";
+    if (loginBtn != undefined) {
+      loginBtn.style.height = "0px";
+    }
   }
   const handleNext = () => {
     document.getElementById("f-card-1").style.transform =
@@ -151,22 +155,43 @@ function Home() {
                 </Link>
               </li>
               <li>
-                <Button
-                  id="login-btn"
-                  style={{
-                    fontSize: "0.8rem",
-                    textTransform: "none",
-                    height: "90%",
-                    width: "90px",
-                    backgroundColor: "purple",
-                  }}
-                  variant="contained"
-                  onClick={() => {
-                    handleLoginBtn();
-                  }}
-                >
-                  Login/SignUp
-                </Button>
+                {auth.user ? (
+                  <Button
+                    variant="contained"
+                    style={{
+                      fontSize: "0.8rem",
+                      textTransform: "none",
+                      height: "90%",
+                      width: "90px",
+                      backgroundColor: "purple",
+                    }}
+                  >
+                    <Link
+                      style={{ color: "white", textDecoration: "none" }}
+                      to="/dashboard/0"
+                    >
+                      Dashboard
+                    </Link>
+                  </Button>
+                ) : (
+                  <Button
+                    id="login-btn"
+                    style={{
+                      fontSize: "0.8rem",
+                      textTransform: "none",
+                      height: "90%",
+                      width: "90px",
+
+                      backgroundColor: "purple",
+                    }}
+                    variant="contained"
+                    onClick={() => {
+                      handleLoginBtn();
+                    }}
+                  >
+                    Login/SignUp
+                  </Button>
+                )}
               </li>
             </ul>
           </navbar>
@@ -342,7 +367,9 @@ function Home() {
                 diverse culture .{" "}
               </div>
               <div className="b3">
-                <Button variant="contained">Join Now</Button>
+                <Button variant="contained">
+                  <Link to="/signup/faculty">Join Now</Link>
+                </Button>
               </div>
               <img src={faculty}></img>
             </div>
