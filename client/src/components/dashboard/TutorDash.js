@@ -9,11 +9,13 @@ import CreateLesson from "./TutorDashboard/CreateLesson";
 import EditCourse from "./TutorDashboard/EditCourse";
 import { Routes, Route } from "react-router-dom";
 import EditCourseForm from "../course/EditCourseForm";
+import { useAuth } from "../../hooks";
 import Doubts from "../posts/Doubts";
 function TutorDashboard() {
+  let auth = useAuth();
   return (
     <div className="t-dashboard">
-      <TutNav />
+      <TutNav data={auth.user.image} />
       <div className="t-main">
         <TutAside />
         <div className="t-wrapper">

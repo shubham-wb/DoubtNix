@@ -3,7 +3,7 @@ import "../../../assets/css/uDashboard.css";
 import { usePosts } from "../../../hooks";
 import CreatePost from "../../posts/createPost";
 import Post from "../../posts/Post";
-
+import StudentAside from "./StudentAside";
 export default function StudentDashboard() {
   let post = usePosts();
   let [postList, setPostList] = useState();
@@ -18,7 +18,7 @@ export default function StudentDashboard() {
   });
 
   return (
-    <div className="u-main">
+    <div className="feed-wrapper">
       <div className="u-feed">
         <CreatePost data={getAPI()} />
         <div className="posts-container">

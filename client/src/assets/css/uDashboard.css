@@ -9,7 +9,12 @@
   background-color: gainsboro;
 }
 #u-nav {
-  height: 10vh;
+  justify-content: center;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 8vh;
+  background-color: white;
   width: 100%;
   display: flex;
 }
@@ -32,11 +37,14 @@
   justify-content: center;
 }
 
+.feed-wrapper {
+  width: 92%;
+}
 .u-main {
   display: flex;
   height: 90vh;
   width: 100%;
-  background: #e0f9fb80;
+  background: rgb(255, 255, 255);
   flex-direction: row;
 }
 .u-feed {
@@ -102,4 +110,12 @@
   color: white;
   padding: 11px;
   padding: 11px;
+}
+
+.aside-f-list ul li:hover {
+  background-color: #c8e8ef;
+}
+
+#hsdlkfjah:hover {
+  background-color: rgba(252, 156, 156, 0.89);
 }
