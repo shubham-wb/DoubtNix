@@ -3,9 +3,11 @@ import { addPost } from "../../api";
 import { usePosts } from "../../hooks";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "../../hooks";
+import { Button } from "@mui/material";
 const CreatePost = (props) => {
   let auth = useAuth();
   let [isChecked, setIsChecked] = useState(false);
+
   let [post, setPost] = useState({
     content: "",
     doubt: false,
@@ -63,29 +65,96 @@ const CreatePost = (props) => {
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <div className="create-post">
-        <div className="post-pic">Upload photo</div>
-        <input
+        <div
+          style={{
+            height: "20%",
+            width: "50%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "60%",
+              width: "60%",
+              borderRadius: "10px",
+              backgroundColor: "white",
+            }}
+          >
+            <span
+              style={{ color: "black", fontWeight: 700, marginRight: "20px" }}
+            >
+              Doubt
+            </span>
+
+            <section className="model-2">
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  value={post.doubt}
+                  name="doubt"
+                  checked={isChecked}
+                  onChange={handleSelect}
+                />
+                <label></label>
+              </div>
+            </section>
+          </div>
+          <Button
+            variant="contained"
+            style={{
+              position: "relative",
+              background: "#0202a6",
+              textTransform: "inherit",
+              width: "40%",
+              height: "60%",
+              marginLeft: "10px",
+              justifyContent: "flex-start",
+              fontSize: "12px",
+            }}
+          >
+            <input id="post-img-up" type="file"></input>
+            <span style={{ width: "100%", position: "absolute", left: "0px" }}>
+              Add Image
+            </span>
+          </Button>
+        </div>
+        <textarea
           type="text"
+          style={{
+            height: "50%",
+            width: "90%",
+            fontSize: "15px",
+            padding: "10px",
+            resize: "none",
+          }}
           value={post.content}
           name="content"
           onChange={handleChange}
-        ></input>
-        <div className="post-btn">
-          <input
-            type="checkbox"
-            value={post.doubt}
-            name="doubt"
-            checked={isChecked}
-            onChange={handleSelect}
-          ></input>
-          <button
-            id="post-submit"
+        ></textarea>
+        <div classNameName="post-btn">
+          <Button
+            variant="contained"
+            style={{
+              background: "#0202a6",
+              textTransform: "inherit",
+              width: "100px",
+              height: "70%",
+              marginRight: "40px",
+              justifyContent: "center",
+              fontSize: "12px",
+              fontWeight: "600",
+              marginRight: "50px",
+            }}
             onClick={() => {
               handleSubmit();
             }}
           >
             Submit
-          </button>
+          </Button>
         </div>
       </div>
     </>

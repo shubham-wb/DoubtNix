@@ -98,6 +98,7 @@ export const useProvideAuth = () => {
     user,
     login,
     loading,
+    logout,
   };
 };
 

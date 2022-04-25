@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "../../mini/SearchBar";
+import SearchBarUser from "../../mini/SearchBarUser";
 
 function StudentNav() {
   return (
@@ -8,7 +8,7 @@ function StudentNav() {
       <Link
         to="/"
         style={{
-          backgroundColor: "white",
+          backgroundColor: "#f4f4f4",
           height: "100%",
           width: "20%",
           display: "flex",
@@ -22,7 +22,7 @@ function StudentNav() {
           style={{
             height: "100%",
             width: "100%",
-            background: "white",
+            background: "#f4f4f4",
           }}
           className="logo"
         >
@@ -30,7 +30,7 @@ function StudentNav() {
           <h3 id="nix">Nix</h3>
         </div>
       </Link>
-      <SearchBar />
+      <SearchBarUser />
       <ul
         style={{
           height: "100%",
@@ -45,7 +45,7 @@ function StudentNav() {
           <li style={styles.li}>
             <img
               src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png"
-              styles={styles.img}
+              style={styles.img}
             ></img>
           </li>
         </Link>
@@ -53,7 +53,7 @@ function StudentNav() {
           <li style={styles.li}>
             <img
               src="https://cdn-icons-png.flaticon.com/512/503/503849.png"
-              styles={styles.img}
+              style={styles.img}
             ></img>
           </li>
         </Link>
@@ -71,7 +71,7 @@ const styles = {
     borderRadius: "50%",
     height: "35px",
     width: "35px",
-    background: "#c8e8ef",
+    background: "#f4f4f4",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -82,15 +82,14 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "80%",
-    width: "80%",
-    background: "transparent",
+    height: "100%",
+    width: "100%",
+    background: "white",
   },
   img: {
     borderRadius: "50%",
-
-    height: "15px",
-    width: "15px",
+    height: "60%",
+    width: "60%",
   },
 };
 export default StudentNav;

@@ -1,22 +1,72 @@
-.post-container {
-  height: 400px;
-  width: 60%;
-  background-color: aquamarine;
-}
-.posts-container {
+.create-post {
+  position: absolute;
+  top: 80px;
+  z-index: 10;
   display: flex;
-  align-items: center;
-  width: 100%;
+  height: 300px;
+  width: 475px;
+  background: rgb(224, 224, 224);
   flex-direction: column;
+  padding-left: 20px;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  border: solid 1px rgb(185, 183, 183);
+  border-radius: 10px;
+  margin-top: 40px;
+  background: white;
+}
+
+.post-pic {
+  margin: 10px;
+  height: 20%;
+  width: 39%;
+  background: orange;
+  border: solid 2px wheat;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.post-btn {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+
+.post-submit {
+  margin: 0px;
+  height: 26%;
+  cursor: pointer;
+  border-radius: 12px;
+  border: solid 2px white;
+  width: 25%;
+  background: black;
+  color: white;
+  padding: 11px;
+  padding: 11px;
+}
+
+.posts-container {
+  background-color: whitesmoke;
+  height: auto;
+  align-items: center;
+  width: 76%;
 }
 
 .post-content {
-  flex-direction: row;
+  flex-direction: column;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: blue;
-  height: 20%;
+  height: 170px;
   width: 100%;
 }
 
@@ -24,11 +74,10 @@
   width: 20%;
 }
 .image-container {
-  justify-content: center;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 46%;
+  height: 190px;
   width: 100%;
 }
 img {
@@ -37,15 +86,119 @@ img {
 }
 
 .comment-container {
+  padding-left: -20px;
   display: flex;
-  height: 10%;
-  background-color: blue;
+  height: 40px;
   width: 100%;
   justify-content: center;
-  align-items: center;
 }
 
+.comment-container input {
+  height: 100%;
+  width: 70%;
+  background-color: whitesmoke;
+}
 .comment-container button {
   width: 30%;
   font-size: 10px;
+}
+
+.model-2 .checkbox label {
+  width: 40px;
+}
+.model-2 .checkbox label:after {
+  top: 0;
+  width: 15px;
+  height: 15px;
+}
+.model-2 .checkbox input:checked + label {
+  background: #4bd865;
+}
+.model-2 .checkbox input:checked + label:after {
+  left: 25px;
+}
+
+/*=====================*/
+.checkbox {
+  position: relative;
+  display: inline-block;
+}
+.checkbox:after,
+.checkbox:before {
+  font-family: FontAwesome;
+  font-feature-settings: normal;
+  -webkit-font-kerning: auto;
+  font-kerning: auto;
+  font-language-override: normal;
+  font-stretch: normal;
+  font-style: normal;
+  font-synthesis: weight style;
+  font-variant: normal;
+  font-weight: normal;
+  text-rendering: auto;
+}
+.checkbox label {
+  width: 10px;
+  height: 15px;
+  background: #ccc;
+  position: relative;
+  display: inline-block;
+  border-radius: 46px;
+  transition: 0.4s;
+}
+.checkbox label:after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  left: 0;
+  top: -5px;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: 0.4s;
+}
+.checkbox input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkbox input:hover + label:after {
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.2), 0 3px 8px 0 rgba(0, 0, 0, 0.15);
+}
+.checkbox input:checked + label:after {
+  left: 20px;
+}
+
+#post-img-up {
+  border-color: transparent;
+}
+#post-img-up::-webkit-file-upload-button {
+  background-color: transparent;
+  color: transparent;
+  border: transparent;
+}
+
+.action-post-btn1 svg {
+  transform: scale(0.5);
+}
+
+.action-post-btn2 svg {
+  transform: scale(0.5);
+}
+
+.action-post-btn1 svg:hover {
+  fill: red;
+  stroke: red;
+}
+
+.action-post-btn2 svg:hover {
+  fill: green;
+  stroke: #4bd865;
 }

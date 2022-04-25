@@ -1,19 +1,23 @@
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
+import { useAuth } from "../../../hooks";
+function StudentAside() {
+  const auth = useAuth();
+  let navigate = useNavigate();
 
-function studentAside() {
   return (
     <div
       className="aside-f-list"
       style={{
         borderRadius: "8px",
-        height: "80%",
+        height: "70%",
         width: "60%",
         background: "white",
         display: "Flex",
         flexDirection: "column",
         alignItems: "center",
-        boxShadow: "0px 0px 4px 4px whitesmoke",
+        boxShadow: "0px 0px 10px 1px gray",
       }}
     >
       <ul
@@ -28,20 +32,24 @@ function studentAside() {
         }}
       >
         <Tooltip title="Post" placement="right">
-          <li style={styles.li}>
-            <img
-              style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/2311/2311991.png"
-            />
-          </li>
+          <Link to="/dashboard">
+            <li style={styles.li}>
+              <img
+                style={{ height: "30px", width: "30px" }}
+                src="https://cdn-icons-png.flaticon.com/512/2311/2311991.png"
+              />
+            </li>
+          </Link>
         </Tooltip>
         <Tooltip title="Courses" placement="right">
-          <li style={styles.li}>
-            <img
-              style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/865/865169.png"
-            />
-          </li>
+          <Link to="/dashboard/0/courses">
+            <li style={styles.li}>
+              <img
+                style={{ height: "30px", width: "30px" }}
+                src="https://cdn-icons-png.flaticon.com/512/865/865169.png"
+              />
+            </li>
+          </Link>
         </Tooltip>
         <Tooltip title="My Doubts" placement="right">
           <li style={styles.li}>
@@ -63,7 +71,7 @@ function studentAside() {
       <hr />
       <ul
         style={{
-          height: "30%",
+          height: "20%",
           width: "80%",
           display: "flex",
           flexDirection: "row",
@@ -83,7 +91,15 @@ function studentAside() {
           </li>
         </Tooltip>
         <Tooltip title="exit" placement="right">
-          <li id="hsdlkfjah" style={styles.li}>
+          <li
+            id="hsdlkfjah"
+            style={styles.li}
+            onClick={() => {
+              auth.logout();
+
+              navigate("/", { replace: true });
+            }}
+          >
             <img
               style={{ height: "30px", width: "30px" }}
               src="https://cdn-icons-png.flaticon.com/512/1286/1286853.png"
@@ -106,4 +122,4 @@ const styles = {
     alignItems: "center",
   },
 };
-export default studentAside;
+export default StudentAside;
