@@ -9,26 +9,20 @@ import { addPostsToState } from "../../../actions/post";
 import { getPosts } from "../../../api";
 
 function StudentDashboard(props) {
+  let [postList, setPostList] = useState([]);
   let [showDoubt, setShowDoubt] = useState(false);
   let [showCreate, setShowCreate] = useState(false);
   let [showfaculty, setShowFacultyPost] = useState(false);
 
   // fetch posts from server
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await getPosts();
-      if (response.success) {
-        addPostsToState(response.data.data); //dispatch action
-      }
-    };
-    fetchPosts();
-  }, []);
 
   function handleShowCreate() {
     setShowCreate((prevState) => !prevState);
   }
 
-  const postList = props.posts;
+  useEffect(() => {
+    setPostList(props.posts);
+  }, [props.posts]);
   return (
     <div
       className='wrapper'
@@ -174,7 +168,7 @@ function StudentDashboard(props) {
 }
 
 const mapStateToProps = (state) => {
-  return state.posts;
+  return state.postReducer;
 };
 
 export default connect(mapStateToProps, { addPostsToState })(StudentDashboard);

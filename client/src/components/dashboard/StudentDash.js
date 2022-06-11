@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../assets/css/uDashboard.css";
 import StudentDashboard from "../dashboard/studentDashboard/StudentDashboard";
 import StudentNav from "./studentDashboard/StudentNav";
@@ -6,12 +6,25 @@ import Doubts from "../posts/Doubts";
 import { Routes, Route, Link } from "react-router-dom";
 import Courses from "../course/Courses";
 import StudentAside from "./studentDashboard/StudentAside";
-const StudentDash = () => {
+import { connect } from "react-redux";
+import { getPosts } from "../../api";
+import { addPostsToState } from "../../actions/post";
+const StudentDash = (props) => {
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await getPosts();
+      if (response.success) {
+        props.addPostsToState(response.data.data); //dispatch action
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <>
-      <div className="u-dashboard">
+      <div className='u-dashboard'>
         <StudentNav />
-        <div className="u-main">
+        <div className='u-main'>
           <aside
             style={{
               position: "fixed",
@@ -28,9 +41,9 @@ const StudentDash = () => {
             <StudentAside />
           </aside>
           <Routes>
-            <Route exact path="/" element={<StudentDashboard />}></Route>
-            <Route exact path="/doubts" element={<Doubts />}></Route>
-            <Route exact path="/courses" element={<Courses />}></Route>
+            <Route exact path='/' element={<StudentDashboard />}></Route>
+            <Route exact path='/doubts' element={<Doubts />}></Route>
+            <Route exact path='/courses' element={<Courses />}></Route>
           </Routes>
         </div>
       </div>
@@ -57,32 +70,32 @@ const StudentDash = () => {
           }}
         >
           <section
-            className="footer-section"
+            className='footer-section'
             style={{
               display: "flex",
               justifyContent: "center",
             }}
           >
-            <Link target="_blank" to="/about-us">
+            <Link target='_blank' to='/about-us'>
               About Us
             </Link>
-            <Link target="_blank" to="/authors">
+            <Link target='_blank' to='/authors'>
               Authors
             </Link>
-            <Link target="_blank" to="/contact-us">
+            <Link target='_blank' to='/contact-us'>
               Contact Us
             </Link>
-            <Link target="_blank" to="/faqs">
+            <Link target='_blank' to='/faqs'>
               FAQs
             </Link>
 
-            <Link target="_blank" to="/privacy-policy">
+            <Link target='_blank' to='/privacy-policy'>
               Privacy Policy
             </Link>
-            <Link target="_blank" to="/sitemap">
+            <Link target='_blank' to='/sitemap'>
               Sitemap
             </Link>
-            <Link target="_blank" to="/careers">
+            <Link target='_blank' to='/careers'>
               Careers
             </Link>
           </section>
@@ -104,4 +117,10 @@ const StudentDash = () => {
   );
 };
 
-export default StudentDash;
+const mapStateToProps = (state) => {
+  const { postReducer } = state;
+  return {
+    postReducer,
+  };
+};
+export default connect(mapStateToProps, { addPostsToState })(StudentDash);

@@ -99,7 +99,7 @@ function StudentAside(props) {
             id='hsdlkfjah'
             style={styles.li}
             onClick={() => {
-              logout();
+              props.authReducer.logout();
 
               navigate("/", { replace: true });
             }}
@@ -128,4 +128,8 @@ const styles = {
   },
 };
 
-export default connect({ logout })(StudentAside);
+const mapStateToProps = (state) => {
+  return state.authReducer;
+};
+
+export default connect(mapStateToProps, { logout })(StudentAside);

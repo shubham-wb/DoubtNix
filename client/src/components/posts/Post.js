@@ -291,8 +291,8 @@ function Posts(props) {
 }
 
 const mapStateToProps = (state) => {
-  const { user } = state;
-  return user;
+  const { authReducer } = state;
+  return authReducer;
 };
 
 export default connect(mapStateToProps, {
