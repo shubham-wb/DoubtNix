@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { useCourses } from "../../../hooks";
-import { useAuth } from "../../../hooks";
-function Courses() {
-  let auth = useAuth();
+import { listMyCourses } from "../../../api";
+import { listOwnCourses } from "../../../actions/course";
+
+function Courses(props) {
+  let { user } = props.authReducer;
+  let { ownCourses } = props.courseReducer;
+
   let [courses, setCourses] = useState();
   let [PCourse, setPCourse] = useState();
   let [UCourse, setUCourse] = useState();
 
-  const course = useCourses();
   let [publishedPage, setpublishedPage] = useState(true);
+
+  setTimeout(() => {
+    let a = courses.filter((elem) => elem["published"] === true);
+    setPCourse((PCourse = a));
+    let b = courses.filter((elem) => elem["published"] === false);
+    setUCourse((UCourse = b));
+  }, 2000);
+
   useEffect(() => {
     const getCourses = async () => {
-      let response = await course.myCourses(auth.user._id);
-      setCourses((courses = response.data));
-      console.log(courses);
-      setTimeout(() => {
-        let a = courses.filter((elem) => elem["published"] == true);
-        setPCourse((PCourse = a));
-        let b = courses.filter((elem) => elem["published"] == false);
-        setUCourse((UCourse = b));
-        console.log("a: ", a);
-        console.log("b: ", b);
-      }, 2000);
+      let response = await listMyCourses(user._id);
+      listOwnCourses(response.data.data);
+      setCourses(response.data.data);
     };
     getCourses();
   }, []);
@@ -30,7 +33,7 @@ function Courses() {
   return (
     <>
       <div
-        className="course_bar"
+        className='course_bar'
         style={{
           height: "10%",
           background: "orange",
@@ -63,7 +66,7 @@ function Courses() {
         ? PCourse
           ? PCourse.map((elem) => {
               return (
-                <div className="course-container">
+                <div className='course-container'>
                   <div>{elem.name}</div>
                   <div>
                     <Link to={"/dashboard/1/course/edit/" + elem._id}>
@@ -76,7 +79,7 @@ function Courses() {
           : null
         : UCourse.map((elem) => {
             return (
-              <div className="course-container">
+              <div className='course-container'>
                 <div>{elem.name}</div>
                 <div>
                   <Link to={"/dashboard/1/course/edit/" + elem._id}>
@@ -90,4 +93,12 @@ function Courses() {
   );
 }
 
-export default Courses;
+const mapStateToProps = (state) => {
+  const { authReducer, courseReducer } = state;
+  return {
+    authReducer,
+    courseReducer,
+  };
+};
+
+export default connect(mapStateToProps)(Courses);

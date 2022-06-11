@@ -101,3 +101,8 @@
   color: white;
   text-decoration: none;
 }
+
+.premium-banner {
+  background-image: url("https://img.freepik.com/free-vector/glowing-particles-wavy-wallpaper_52683-13240.jpg?t=st=1650930714~exp=1650931314~hmac=a4c91c714c28b629e5eec5571402d74130fc161eb29904d8039d4383564249d1&w=900");
+  background-size: contain;
+}

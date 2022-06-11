@@ -1,20 +1,17 @@
 import { useState } from "react";
-import { addPost } from "../../api";
-import { usePosts } from "../../hooks";
+import { connect } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { useAuth } from "../../hooks";
 import { Button } from "@mui/material";
+import { addPost } from "../../api";
+import { addNewPost } from "../../actions/post";
 const CreatePost = (props) => {
-  let auth = useAuth();
   let [isChecked, setIsChecked] = useState(false);
-
+  let { user } = props;
   let [post, setPost] = useState({
     content: "",
     doubt: false,
     photo: "",
   });
-
-  const posts = usePosts();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,17 +20,17 @@ const CreatePost = (props) => {
       post: {
         // object that we want to update
         ...prevState.post, // keep all other key-value pairs
-        user: auth.user,
+        user: user,
         [name]: value, // update the value of specific key
       },
     }));
   };
-
+  //create post
   const handleSubmit = async () => {
     const response = await addPost(post);
 
     if (response.success) {
-      posts.addPostToState(response.data.post);
+      addNewPost(response.data.post); //sending to store
 
       setPost(
         (post = {
@@ -63,8 +60,8 @@ const CreatePost = (props) => {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="create-post">
+      <Toaster position='top-center' reverseOrder={false} />
+      <div className='create-post'>
         <div
           style={{
             height: "20%",
@@ -90,12 +87,12 @@ const CreatePost = (props) => {
               Doubt
             </span>
 
-            <section className="model-2">
-              <div className="checkbox">
+            <section className='model-2'>
+              <div className='checkbox'>
                 <input
-                  type="checkbox"
+                  type='checkbox'
                   value={post.doubt}
-                  name="doubt"
+                  name='doubt'
                   checked={isChecked}
                   onChange={handleSelect}
                 />
@@ -104,7 +101,7 @@ const CreatePost = (props) => {
             </section>
           </div>
           <Button
-            variant="contained"
+            variant='contained'
             style={{
               position: "relative",
               background: "#0202a6",
@@ -116,14 +113,14 @@ const CreatePost = (props) => {
               fontSize: "12px",
             }}
           >
-            <input id="post-img-up" type="file"></input>
+            <input id='post-img-up' type='file'></input>
             <span style={{ width: "100%", position: "absolute", left: "0px" }}>
               Add Image
             </span>
           </Button>
         </div>
         <textarea
-          type="text"
+          type='text'
           style={{
             height: "50%",
             width: "90%",
@@ -132,18 +129,17 @@ const CreatePost = (props) => {
             resize: "none",
           }}
           value={post.content}
-          name="content"
+          name='content'
           onChange={handleChange}
         ></textarea>
-        <div classNameName="post-btn">
+        <div classNameName='post-btn'>
           <Button
-            variant="contained"
+            variant='contained'
             style={{
               background: "#0202a6",
               textTransform: "inherit",
               width: "100px",
               height: "70%",
-              marginRight: "40px",
               justifyContent: "center",
               fontSize: "12px",
               fontWeight: "600",
@@ -161,4 +157,8 @@ const CreatePost = (props) => {
   );
 };
 
-export default CreatePost;
+const mapStateToProps = (state) => {
+  const { user } = state;
+  return user;
+};
+export default connect(mapStateToProps, { addNewPost })(CreatePost);

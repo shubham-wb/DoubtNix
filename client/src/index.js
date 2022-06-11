@@ -1,19 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import "./assets/css/index.css";
+import App from "./components/App";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducer from "./reducers";
 
-import { AuthProvider } from "./providers";
-import { PostsProvider } from "./providers";
+const store = createStore(reducer);
 
-import { CoursesProvider } from "./providers";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-    <PostsProvider>
-      <CoursesProvider>
-        <App />
-      </CoursesProvider>
-    </PostsProvider>
-  </AuthProvider>
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
-import { useAuth } from "../../../hooks";
-function StudentAside() {
-  const auth = useAuth();
+import { logout } from "../../../actions/auth";
+import { connect } from "react-redux";
+function StudentAside(props) {
   let navigate = useNavigate();
 
   return (
     <div
-      className="aside-f-list"
+      className='aside-f-list'
       style={{
         borderRadius: "8px",
         height: "70%",
@@ -31,39 +31,43 @@ function StudentAside() {
           padding: "0px",
         }}
       >
-        <Tooltip title="Post" placement="right">
-          <Link to="/dashboard">
+        <Tooltip title='Post' placement='right'>
+          <Link to='/dashboard'>
             <li style={styles.li}>
               <img
                 style={{ height: "30px", width: "30px" }}
-                src="https://cdn-icons-png.flaticon.com/512/2311/2311991.png"
+                src='https://cdn-icons-png.flaticon.com/512/2311/2311991.png'
+                alt=''
               />
             </li>
           </Link>
         </Tooltip>
-        <Tooltip title="Courses" placement="right">
-          <Link to="/dashboard/0/courses">
+        <Tooltip title='Courses' placement='right'>
+          <Link to='/dashboard/0/courses'>
             <li style={styles.li}>
               <img
                 style={{ height: "30px", width: "30px" }}
-                src="https://cdn-icons-png.flaticon.com/512/865/865169.png"
+                src='https://cdn-icons-png.flaticon.com/512/865/865169.png'
+                alt=''
               />
             </li>
           </Link>
         </Tooltip>
-        <Tooltip title="My Doubts" placement="right">
+        <Tooltip title='My Doubts' placement='right'>
           <li style={styles.li}>
             <img
               style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/2097/2097047.png"
+              src='https://cdn-icons-png.flaticon.com/512/2097/2097047.png'
+              alt=''
             />
           </li>
         </Tooltip>
-        <Tooltip title="My Courses" placement="right">
+        <Tooltip title='My Courses' placement='right'>
           <li style={styles.li}>
             <img
               style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/830/830958.png"
+              src='https://cdn-icons-png.flaticon.com/512/830/830958.png'
+              alt=''
             />
           </li>
         </Tooltip>
@@ -74,7 +78,6 @@ function StudentAside() {
           height: "20%",
           width: "80%",
           display: "flex",
-          flexDirection: "row",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
@@ -82,27 +85,29 @@ function StudentAside() {
           padding: "0px",
         }}
       >
-        <Tooltip title="help" placement="left">
+        <Tooltip title='help' placement='left'>
           <li style={styles.li}>
             <img
               style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/906/906794.png"
+              src='https://cdn-icons-png.flaticon.com/512/906/906794.png'
+              alt=''
             />
           </li>
         </Tooltip>
-        <Tooltip title="exit" placement="right">
+        <Tooltip title='exit' placement='right'>
           <li
-            id="hsdlkfjah"
+            id='hsdlkfjah'
             style={styles.li}
             onClick={() => {
-              auth.logout();
+              logout();
 
               navigate("/", { replace: true });
             }}
           >
             <img
               style={{ height: "30px", width: "30px" }}
-              src="https://cdn-icons-png.flaticon.com/512/1286/1286853.png"
+              src='https://cdn-icons-png.flaticon.com/512/1286/1286853.png'
+              alt=''
             />
           </li>
         </Tooltip>
@@ -122,4 +127,5 @@ const styles = {
     alignItems: "center",
   },
 };
-export default StudentAside;
+
+export default connect({ logout })(StudentAside);

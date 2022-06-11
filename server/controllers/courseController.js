@@ -18,6 +18,7 @@ module.exports.create = async (req, res) => {
     });
 
     return res.json({
+      data: course,
       message: "Course created succesfully ",
     });
   }

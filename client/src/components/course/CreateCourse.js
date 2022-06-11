@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../../assets/css/createCourse.css";
-import { useAuth, useCourses } from "../../hooks";
-export default function NewCourse() {
-  const Courses = useCourses();
-  const auth = useAuth();
-  const user = auth.user;
-
+import { connect } from "react-redux";
+import { toast, Toaster } from "react-hot-toast";
+import "../../assets/css/createCourse.css"; //css
+import { addCourse } from "../../api";
+import { newCourse } from "../../actions/course";
+function CreateCourse(props) {
+  const { user } = props;
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
 
@@ -59,8 +59,13 @@ export default function NewCourse() {
   }
 
   const handleSubmit = async (event) => {
-    console.log(values);
-    let response = await Courses.addCourse(values.values);
+    let response = await newCourse(values.values);
+    if (response) {
+      addCourse(response.data);
+      toast.success("course created succesfully");
+    } else {
+      toast.error("cannot create course");
+    }
     setValues(
       (values = {
         name: "",
@@ -75,74 +80,84 @@ export default function NewCourse() {
   };
 
   return (
-    <div className="main-course-container">
-      <div className="new-course-container">
-        <div className="pic-course">
-          <div className="upload-pic">
-            {selectedFile ? (
-              <img id="preview" src={preview} />
-            ) : (
-              <img src="https://cdn-icons-png.flaticon.com/512/7235/7235820.png" />
-            )}
-          </div>
+    <>
+      <Toaster position='top-center' reverseOrder={false} />
+      <div className='main-course-container'>
+        <div className='new-course-container'>
+          <div className='pic-course'>
+            <div className='upload-pic'>
+              {selectedFile ? (
+                <img id='preview' src={preview} alt='' />
+              ) : (
+                <img
+                  src='https://cdn-icons-png.flaticon.com/512/7235/7235820.png'
+                  alt=''
+                />
+              )}
+            </div>
 
-          <div className="upload-pic-banner">
+            <div className='upload-pic-banner'>
+              <input
+                type='file'
+                id='image'
+                name='image'
+                value={values.image}
+                onChange={(e) => {
+                  handleInputChange(e);
+                  onSelectFile(e);
+                }}
+                required
+              ></input>
+            </div>
+          </div>
+          <div className='file-name'></div>
+          <div className='title'>
             <input
-              type="file"
-              id="image"
-              name="image"
-              value={values.image}
-              onChange={(e) => {
-                handleInputChange(e);
-                onSelectFile(e);
-              }}
-              required
-            ></input>
+              type='text'
+              value={values.name}
+              placeholder='Title'
+              name='name'
+              onChange={handleInputChange}
+            />
+            <hr />
           </div>
-        </div>
-        <div className="file-name"></div>
-        <div className="title">
-          <input
-            type="text"
-            value={values.name}
-            placeholder="Title"
-            name="name"
-            onChange={handleInputChange}
-          />
-          <hr />
-        </div>
-        <div className="description">
-          <input
-            type="text"
-            placeholder="Description"
-            value={values.description}
-            name="description"
-            onChange={handleInputChange}
-          />
+          <div className='description'>
+            <input
+              type='text'
+              placeholder='Description'
+              value={values.description}
+              name='description'
+              onChange={handleInputChange}
+            />
 
-          <hr />
-        </div>
-        <div className="category">
-          <input
-            placeholder="Category"
-            type="text"
-            value={values.category}
-            name="category"
-            onChange={handleInputChange}
-          />
-          <hr />
-        </div>
-        <div className="nav-btns">
-          <button
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            Submit
-          </button>
-          <button>Cancel</button>
+            <hr />
+          </div>
+          <div className='category'>
+            <input
+              placeholder='Category'
+              type='text'
+              value={values.category}
+              name='category'
+              onChange={handleInputChange}
+            />
+            <hr />
+          </div>
+          <div className='nav-btns'>
+            <button
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              Submit
+            </button>
+            <button>Cancel</button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
+const mapStateToProps = (state) => {
+  return state;
+};
+export default connect(mapStateToProps)(CreateCourse);

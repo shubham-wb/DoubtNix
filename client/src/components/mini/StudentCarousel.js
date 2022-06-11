@@ -35,7 +35,7 @@ function StudentCarousel(props) {
           }}
         >
           <div
-            id="lkjh-1"
+            id='lkjh-1'
             style={{
               transform: `translateX(${props.data.next}px)`,
               height: "95%",
@@ -57,10 +57,11 @@ function StudentCarousel(props) {
                 width: "100%",
               }}
               src={a}
+              alt=''
             ></img>
           </div>
           <div
-            id="lkjh-2"
+            id='lkjh-2'
             style={{
               transform: `translateX(${props.data.next}px)`,
               height: "95%",
@@ -80,10 +81,11 @@ function StudentCarousel(props) {
                 width: "100%",
               }}
               src={a}
+              alt=''
             ></img>
           </div>
           <div
-            id="lkjh-3"
+            id='lkjh-3'
             style={{
               transform: `translateX(${props.data.next}px)`,
               height: "95%",
@@ -105,6 +107,7 @@ function StudentCarousel(props) {
                 width: "100%",
               }}
               src={a}
+              alt=''
             ></img>
           </div>
         </div>
@@ -135,10 +138,11 @@ function StudentCarousel(props) {
               transform: "translateY(20px) scale(0.8)",
             }}
             src={imageData[index]}
+            alt=''
           ></img>
         </div>
         <div
-          className="m"
+          className='m'
           style={{
             height: "60px",
             width: "60px",
@@ -147,9 +151,10 @@ function StudentCarousel(props) {
           }}
         >
           <img
-            className="rtgs"
+            className='rtgs'
             style={{ height: "100%", width: "100%", borderRadius: "50%" }}
             src={imageData[index + 1]}
+            alt=''
           ></img>
         </div>
         <div
@@ -169,20 +174,21 @@ function StudentCarousel(props) {
               filter: "grayscale(0.5)",
             }}
             src={imageData[index + 2]}
+            alt=''
           ></img>
 
-          <div class="svg-wrapper">
-            <svg height="166" width="166" xmlns="http://www.w3.org/2000/svg">
+          <div className='svg-wrapper'>
+            <svg height='166' width='166' xmlns='http://www.w3.org/2000/svg'>
               <circle
-                cx="83"
-                cy="83"
-                r="40"
+                cx='83'
+                cy='83'
+                r='40'
                 ref={myRef}
-                id="shape"
-                height="166"
-                width="166"
+                id='shape'
+                height='166'
+                width='166'
               ></circle>
-              <div class="text">kW</div>
+              <div className='text'>kW</div>
             </svg>
           </div>
         </div>

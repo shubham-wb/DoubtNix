@@ -145,3 +145,12 @@ export const removeComment = (id, user_id, post_id) => {
     },
   });
 };
+export const addComment = (comment) => {
+  let url = API_URLS.createComment();
+  return customFetch(url, {
+    method: "POST",
+    body: {
+      comment,
+    },
+  });
+};

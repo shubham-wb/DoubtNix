@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../../hooks";
 import Button from "@mui/material/Button";
 import toast, { Toaster } from "react-hot-toast";
-const SignIn = () => {
+import { login } from "../../api";
+import { userLogin } from "../../actions/auth";
+import { LOCALSTORAGE_TOKEN_KEY, setItemInLocalStorage } from "../../utils";
+import jwt from "jwt-decode";
+//sign in component
+
+const SignIn = (props) => {
   let navigate = useNavigate();
-  const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
 
+  //function to handle login button
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoggingIn(true);
@@ -17,9 +23,13 @@ const SignIn = () => {
       setLoggingIn(false);
       return toast.error("Please add both email and password");
     }
-    const response = await auth.login(email, password);
-    console.log(response);
+
+    const response = await login(email, password);
     if (response.success) {
+      let token = response.data.data;
+      let userDetails = jwt(token);
+      props.userLogin(userDetails);
+      setItemInLocalStorage(LOCALSTORAGE_TOKEN_KEY, token ? token : null);
       toast.success("signed in successfully");
       navigate("/dashboard/0", { replace: true });
     } else {
@@ -31,14 +41,13 @@ const SignIn = () => {
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
-      <div id="login-box">
+      <Toaster position='top-center' reverseOrder={false} />
+      <div id='login-box'>
         <h1 style={{ height: "10%", width: "100%", fontSize: "1.4rem" }}>
           Log In
         </h1>
         <div
           style={{
-            display: "flex",
             alignItems: "center",
             backgroundColor: "white",
             height: "15%",
@@ -50,16 +59,17 @@ const SignIn = () => {
           }}
         >
           <img
-            src="https://cdn-icons-png.flaticon.com/512/646/646094.png"
+            src='https://cdn-icons-png.flaticon.com/512/646/646094.png'
             style={{
               height: "45%",
               width: "10%",
               marginRight: "15px",
             }}
+            alt=''
           ></img>
           <input
-            type="email"
-            placeholder="Email"
+            type='email'
+            placeholder='Email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -79,16 +89,17 @@ const SignIn = () => {
           }}
         >
           <img
-            src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+            src='https://cdn-icons-png.flaticon.com/512/3064/3064197.png'
             style={{
               height: "45%",
               width: "10%",
               marginRight: "15px",
             }}
+            alt=''
           ></img>
           <input
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -118,7 +129,7 @@ const SignIn = () => {
             {loggingIn ? (
               <>
                 Login
-                <div className="loader">
+                <div className='loader'>
                   <div></div>
                   <div></div>
                   <div></div>
@@ -151,7 +162,7 @@ const SignIn = () => {
               color: "#058cf0e3",
             }}
           >
-            New User ? <Link to="/signup/student">Signup</Link>
+            New User ? <Link to='/signup/student'>Signup</Link>
           </div>
           <div
             style={{
@@ -161,7 +172,7 @@ const SignIn = () => {
               marginLeft: "80px",
             }}
           >
-            <Link to="/signup/faculty">Faculty Signup</Link>
+            <Link to='/signup/faculty'>Faculty Signup</Link>
           </div>
         </div>
       </div>
@@ -169,4 +180,8 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+export default connect(mapStateToProps, { userLogin })(SignIn);

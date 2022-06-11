@@ -1,30 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "../../../assets/css/uDashboard.css";
-import { usePosts } from "../../../hooks";
 import plus from "../../../assets/images/add_circle.svg";
 import CreatePost from "../../posts/createPost";
 import Post from "../../posts/Post";
 import Dropdown from "../../mini/dropdown";
-export default function StudentDashboard() {
-  let post = usePosts();
-  let [postList, setPostList] = useState();
+import { connect } from "react-redux";
+import { addPostsToState } from "../../../actions/post";
+import { getPosts } from "../../../api";
 
-  (async function getAPI() {
-    let response = await post.posts;
-    setPostList((postList = response));
-  })();
-
+function StudentDashboard(props) {
   let [showDoubt, setShowDoubt] = useState(false);
   let [showCreate, setShowCreate] = useState(false);
   let [showfaculty, setShowFacultyPost] = useState(false);
+
+  // fetch posts from server
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await getPosts();
+      if (response.success) {
+        addPostsToState(response.data.data); //dispatch action
+      }
+    };
+    fetchPosts();
+  }, []);
 
   function handleShowCreate() {
     setShowCreate((prevState) => !prevState);
   }
 
+  const postList = props.posts;
   return (
     <div
-      className="wrapper"
+      className='wrapper'
       style={{
         width: "92%",
         height: "120vh",
@@ -33,8 +40,8 @@ export default function StudentDashboard() {
         background: "whitesmoke",
       }}
     >
-      <div className="feed-wrapper">
-        <div className="u-feed">
+      <div className='feed-wrapper'>
+        <div className='u-feed'>
           <div
             style={{
               position: "relative",
@@ -82,6 +89,7 @@ export default function StudentDashboard() {
                     height: "25px",
                     width: "25px",
                   }}
+                  alt=''
                 ></img>
                 <div>Create Post</div>
               </button>
@@ -89,7 +97,7 @@ export default function StudentDashboard() {
             {showCreate ? <CreatePost /> : null}
           </div>
           <div
-            className="doubt-filter"
+            className='doubt-filter'
             style={{
               padding: "18px 0px",
               width: "76%",
@@ -151,7 +159,7 @@ export default function StudentDashboard() {
               </button>
             </div>
           </div>
-          <div className="posts-container" style={{ background: "whitesmoke" }}>
+          <div className='posts-container' style={{ background: "whitesmoke" }}>
             {postList
               ? postList.map((elem) => {
                   return <Post data={elem} />;
@@ -159,8 +167,14 @@ export default function StudentDashboard() {
               : null}
           </div>
         </div>
-        <div className="u-side-panel"></div>
+        <div className='u-side-panel'></div>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return state.posts;
+};
+
+export default connect(mapStateToProps, { addPostsToState })(StudentDashboard);

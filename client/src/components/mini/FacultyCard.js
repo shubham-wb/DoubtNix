@@ -59,11 +59,12 @@ function FacultyCard() {
 
   return (
     <>
-      {data.map((elem) => {
+      {data.map((elem, index) => {
         return (
           <li
+            key={`f-card-${index}`}
             id={"f-card-" + elem.id}
-            className="f-card-wrapper"
+            className='f-card-wrapper'
             style={{
               height: "220px",
               width: "400px",
@@ -72,7 +73,7 @@ function FacultyCard() {
             }}
           >
             <span
-              className="f-wrap"
+              className='f-wrap'
               style={{
                 height: "100%",
                 width: "100%",
@@ -84,7 +85,7 @@ function FacultyCard() {
               }}
             >
               <div
-                className="img-container"
+                className='img-container'
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -101,10 +102,11 @@ function FacultyCard() {
                     height: "100%",
                     width: "100%",
                   }}
+                  alt=''
                 ></img>
               </div>
               <div
-                className="description"
+                className='description'
                 style={{
                   fontSize: "20px",
                   height: "100%",
@@ -115,7 +117,7 @@ function FacultyCard() {
                 }}
               >
                 <h1
-                  className="f-name"
+                  className='f-name'
                   style={{
                     margin: "0px",
                     marginTop: "20px",
@@ -129,7 +131,7 @@ function FacultyCard() {
                   {elem.name}
                 </h1>
                 <h2
-                  className="f-subject"
+                  className='f-subject'
                   style={{
                     height: "10%",
                     width: "80%",
@@ -146,7 +148,7 @@ function FacultyCard() {
                 </h2>
 
                 <h2
-                  className="f-testimonial"
+                  className='f-testimonial'
                   style={{
                     fontWeight: "400",
                     height: "55%",
@@ -161,7 +163,7 @@ function FacultyCard() {
                 </h2>
                 <hr style={{ width: "80%", margin: "10px" }} />
                 <div
-                  className="f-rating-banner"
+                  className='f-rating-banner'
                   style={{
                     width: "80%",
                     height: "15%",
@@ -172,7 +174,7 @@ function FacultyCard() {
                   }}
                 >
                   <div
-                    className="f-name"
+                    className='f-name'
                     style={{
                       alignItems: "center",
                       justifyContent: "center",
@@ -209,7 +211,8 @@ function FacultyCard() {
                             height: "10px",
                             width: "10px",
                           }}
-                          src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png"
+                          src='https://cdn-icons-png.flaticon.com/512/1040/1040230.png'
+                          alt=''
                         ></img>
                       </span>
                       <span
@@ -255,7 +258,7 @@ function FacultyCard() {
                     }}
                   >
                     <div
-                      className="n-ofkads"
+                      className='n-ofkads'
                       style={{
                         fontWeight: "800",
                         color: "#4f4e4e",
@@ -273,7 +276,7 @@ function FacultyCard() {
                           width: "50%",
                         }}
                       >
-                        <img src={students}></img>
+                        <img src={students} alt=''></img>
                       </span>
                       <span>{elem.Students}</span>
                     </div>
@@ -322,6 +325,7 @@ function FacultyCard() {
                             width: "80%",
                           }}
                           src={coursess}
+                          alt=''
                         ></img>
                       </span>
                       <span

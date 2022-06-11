@@ -17,7 +17,7 @@ header {
   align-items: center;
 }
 
-navbar {
+nav {
   height: 50%;
   width: 90%;
   display: flex;
@@ -410,7 +410,7 @@ main {
   height: 480px;
   width: 281px;
   right: -20px;
-  top: -117px;
+  top: -95px;
 }
 .css-1t6e9jv-MuiCardActions-root > :not(:first-of-type) {
   margin-left: 8px;

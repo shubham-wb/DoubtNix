@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import "../../../assets/css/createLesson.css";
 function CreateLesson() {
@@ -46,35 +46,35 @@ function CreateLesson() {
     });
   };
   return (
-    <div className="input-lesson-container">
+    <div className='input-lesson-container'>
       <input
-        name="title"
-        placeholder="Title"
-        type="string"
-        className="title"
+        name='title'
+        placeholder='Title'
+        type='string'
+        className='title'
         onChange={handleChange}
         value={lesson.title}
       ></input>
       <hr />
       <input
-        name="content"
-        placeholder="content"
-        className="content"
-        type="string"
+        name='content'
+        placeholder='content'
+        className='content'
+        type='string'
         onChange={handleChange}
         value={lesson.content}
       ></input>
       <hr />
 
       <input
-        name="resource_url"
-        placeholder="resource"
-        className="resource"
-        type="string"
+        name='resource_url'
+        placeholder='resource'
+        className='resource'
+        type='string'
         onChange={handleChange}
         value={lesson.resource_url}
       ></input>
-      <div className="nav-btns">
+      <div className='nav-btns'>
         <button
           onClick={(e) => {
             handleSubmit(e);

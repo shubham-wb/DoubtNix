@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { usePosts } from "../../hooks";
-
-const Doubts = () => {
-  let posts = usePosts();
+import { connect } from "react-redux";
+const Doubts = (props) => {
+  const { posts } = props.postsReducer;
   let [doubts, setDoubts] = useState([]);
   let [post, setPost] = useState([]);
 
@@ -10,14 +9,14 @@ const Doubts = () => {
     async function fetchDoubts() {
       let response = await posts.posts;
 
-      setPost((post = response));
+      setPost((post = response.data));
     }
     fetchDoubts();
   });
 
   setTimeout(() => {
-    if (posts.length != 0) {
-      var array = post.filter((elem) => elem["doubt"] == true);
+    if (posts.length !== 0) {
+      var array = post.filter((elem) => elem["doubt"] === true);
     }
     setDoubts((doubts = array));
   }, 500);
@@ -36,4 +35,9 @@ const Doubts = () => {
   );
 };
 
-export default Doubts;
+const mapStateToProps = (state) => {
+  const { postsReducer } = state;
+  return postsReducer;
+};
+
+export default connect(mapStateToProps)(Doubts);
