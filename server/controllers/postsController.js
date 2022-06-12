@@ -30,6 +30,7 @@ module.exports.create = async function (req, res) {
         content: req.body.post.content,
         user: req.body.post.user._id,
         doubt: req.body.post.doubt,
+        postedAt: Date.now(),
       });
 
       user.posts.push(post);

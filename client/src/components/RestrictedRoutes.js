@@ -13,7 +13,6 @@ const TutRoute = (props) => {
   let { user } = props;
 
   const role = user.role;
-  console.log(role);
 
   return role === "Teacher" ? props.children : <Navigate to='/dashboard/0' />;
 };

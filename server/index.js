@@ -36,5 +36,5 @@ app.use(passport.initialize());
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
-const q = 1000;
+const q = 100;
 // use express router

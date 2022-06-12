@@ -6,23 +6,20 @@ import Post from "../../posts/Post";
 import Dropdown from "../../mini/dropdown";
 import { connect } from "react-redux";
 import { addPostsToState } from "../../../actions/post";
-import { getPosts } from "../../../api";
 
 function StudentDashboard(props) {
+  console.log(props.posts);
   let [postList, setPostList] = useState([]);
-  let [showDoubt, setShowDoubt] = useState(false);
   let [showCreate, setShowCreate] = useState(false);
-  let [showfaculty, setShowFacultyPost] = useState(false);
 
   // fetch posts from server
 
   function handleShowCreate() {
     setShowCreate((prevState) => !prevState);
   }
-
   useEffect(() => {
     setPostList(props.posts);
-  }, [props.posts]);
+  });
   return (
     <div
       className='wrapper'
@@ -88,7 +85,7 @@ function StudentDashboard(props) {
                 <div>Create Post</div>
               </button>
             </div>
-            {showCreate ? <CreatePost /> : null}
+            {showCreate ? <CreatePost data={handleShowCreate} /> : null}
           </div>
           <div
             className='doubt-filter'
@@ -155,9 +152,11 @@ function StudentDashboard(props) {
           </div>
           <div className='posts-container' style={{ background: "whitesmoke" }}>
             {postList
-              ? postList.map((elem) => {
-                  return <Post data={elem} />;
-                })
+              ? postList
+                  .sort((a, b) => b.postedAt - a.postedAt)
+                  .map((elem) => {
+                    return <Post data={elem} />;
+                  })
               : null}
           </div>
         </div>

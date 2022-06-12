@@ -30,8 +30,10 @@ const CreatePost = (props) => {
     const response = await addPost(post);
 
     if (response.success) {
-      addNewPost(response.data.post); //sending to store
-
+      console.log(response);
+      props.addNewPost(response.data.data.post); //sending to store
+      console.log(props);
+      props.data();
       setPost(
         (post = {
           content: "",
@@ -158,7 +160,7 @@ const CreatePost = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { user } = state;
-  return user;
+  const { authReducer } = state;
+  return authReducer;
 };
 export default connect(mapStateToProps, { addNewPost })(CreatePost);

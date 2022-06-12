@@ -18,11 +18,11 @@ export const addNewPost = (post) => {
     post,
   };
 };
-export const addComment = (comment, postID) => {
+export const addNewComment = (comment) => {
   return {
     type: ADD_COMMENT,
-    postID,
-    comment,
+    content: comment,
+    postID: comment.post,
   };
 };
 
@@ -41,6 +41,7 @@ export const doubtResolve = (id) => {
 };
 
 export const deleteComment = (commentID, postID) => {
+  console.log(commentID, postID);
   return {
     type: DELETE_COMMENT,
     commentID,

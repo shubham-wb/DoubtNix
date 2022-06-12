@@ -20,20 +20,20 @@ export const postReducer = (state = initialState, action) => {
       };
     }
     case ADD_NEW_POST: {
+      console.log(action, "action tea");
       return {
         ...state,
         posts: [action.post, ...state.posts],
       };
     }
     case ADD_COMMENT: {
-      let post = state.posts.filter(() => post._id === action.postID);
+      let post = state.posts.find((element) => element._id === action.postID);
 
-      if (!post.comment) {
-        post.comment = [];
+      if (!post.comments.length) {
+        post.comments = [];
       }
-
-      post.comment.push(action.comment);
-
+      post.comments.push(action.content);
+      console.log(post, "reducer");
       let filteredArray = state.posts.filter(
         (post) => post._id !== action.postID
       );
@@ -43,24 +43,23 @@ export const postReducer = (state = initialState, action) => {
       };
     }
     case DELETE_POST: {
+      console.log(action, "action");
       let filteredArray = state.posts.filter((post) => post._id !== action.id);
 
       return {
         ...state,
-        filteredArray,
+        posts: [...filteredArray],
       };
     }
     case DELETE_COMMENT: {
-      let post = state.posts.filter(() => post._id === action.postID);
-
+      let post = state.posts.find((element) => element._id === action.postID);
       post.comments = post.comments.filter(
         (comment) => comment._id !== action.commentID
       );
-
+      console.log(post.comments.length);
       let filteredArray = state.posts.filter(
         (post) => post._id !== action.postID
       );
-
       return {
         ...state,
         posts: [...filteredArray, post],
@@ -68,13 +67,13 @@ export const postReducer = (state = initialState, action) => {
     }
 
     case RESOLVE_DOUBT: {
-      let post = state.posts.filter(() => post._id === action.postID);
+      let post = state.posts.find((elem) => elem._id === action.id);
 
-      post.isDoubt = false;
+      post.doubt = false;
 
-      let filteredArray = state.posts.filter(
-        (post) => post._id !== action.postID
-      );
+      console.log(post);
+
+      let filteredArray = state.posts.filter((post) => post._id !== action.id);
 
       return {
         ...state,

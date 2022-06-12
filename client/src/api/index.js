@@ -22,7 +22,6 @@ const customFetch = async (url, { body, ...customConfig }) => {
   if (body) {
     config.body = JSON.stringify(body);
   }
-  console.log(config, url);
 
   try {
     const response = await fetch(url, config);

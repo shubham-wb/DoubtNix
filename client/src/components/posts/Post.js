@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "../../assets/css/post.css"; //css
 import { toast, Toaster } from "react-hot-toast";
 import Tooltip from "@mui/material/Tooltip";
 import { addComment, removeComment, removePost, resolveDoubt } from "../../api";
-import { deleteComment, deletePost, doubtResolve } from "../../actions/post";
+import {
+  deleteComment,
+  deletePost,
+  doubtResolve,
+  addNewComment,
+} from "../../actions/post";
 
 function Posts(props) {
-  let { user } = props;
+  let { user } = props.authReducer;
   let [viewComment, setViewComment] = useState(false);
   let [comment, setComment] = useState({
     content: "",
@@ -34,7 +39,7 @@ function Posts(props) {
   const handleDoubtButton = async (id) => {
     let response = await resolveDoubt(id, user);
     if (response) {
-      doubtResolve(id);
+      props.doubtResolve(id);
       toast.success("Doubt marked as resolved ");
     } else {
       toast.error("cannot resolve Doubt ");
@@ -46,7 +51,7 @@ function Posts(props) {
   const handleDeleteButton = async (id) => {
     let response = await removePost(id, user);
     if (response.success) {
-      deletePost(id);
+      props.deletePost(id);
       toast.success("post deleted ");
     } else {
       toast.error("cannot delete post ");
@@ -57,9 +62,8 @@ function Posts(props) {
 
   const handleDeleteComment = async (commentId, postId, userId) => {
     let response = await removeComment(commentId, userId, postId);
-
-    if (response.success) {
-      deleteComment(commentId, postId);
+    if (response.message) {
+      props.deleteComment(commentId, postId);
       toast.success("comment deleted");
     } else {
       toast.error("cannot delete comment");
@@ -71,7 +75,7 @@ function Posts(props) {
     const response = await addComment(comment.comment);
 
     if (response.success) {
-      addComment(comment.comment.content, postID);
+      props.addNewComment(response.data.data.comment);
       toast.success("post created successfully");
     } else {
       toast.error("cannot create post");
@@ -172,6 +176,7 @@ function Posts(props) {
               paddingLeft: "20px",
             }}
           >
+            {props.data.createdAt}
             {props.data.content}
           </div>
         </div>
@@ -232,43 +237,45 @@ function Posts(props) {
         {viewComment ? (
           <div>
             {props.data.comments.length !== 0 ? (
-              props.data.comments.map((elem) => {
-                return (
-                  <div
-                    style={{
-                      display: "flex",
-                      paddingLeft: "20px",
-                      textTransform: "capitalize",
-                    }}
-                  >
+              props.data.comments
+                .sort((a, b) => b.postedAt - a.postedAt)
+                .map((elem) => {
+                  return (
                     <div
                       style={{
-                        fontSize: "14px",
-                        marginTop: "10px",
-                        marginBottom: "10px",
-                        height: "20px",
-                        width: "95%",
-                        color: "black",
+                        display: "flex",
+                        paddingLeft: "20px",
+                        textTransform: "capitalize",
                       }}
                     >
-                      {elem.content}
-                    </div>
-                    {elem.user === user._id ? (
-                      <button
-                        onClick={() => {
-                          handleDeleteComment(
-                            elem._id,
-                            props.data._id,
-                            props.data.user
-                          );
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          marginTop: "10px",
+                          marginBottom: "10px",
+                          height: "20px",
+                          width: "95%",
+                          color: "black",
                         }}
                       >
-                        Delete
-                      </button>
-                    ) : null}
-                  </div>
-                );
-              })
+                        {elem.content}
+                      </div>
+                      {elem.user === user._id ? (
+                        <button
+                          onClick={() => {
+                            handleDeleteComment(
+                              elem._id,
+                              props.data._id,
+                              props.data.user
+                            );
+                          }}
+                        >
+                          Delete
+                        </button>
+                      ) : null}
+                    </div>
+                  );
+                })
             ) : (
               <h3
                 style={{
@@ -291,12 +298,13 @@ function Posts(props) {
 }
 
 const mapStateToProps = (state) => {
-  const { authReducer } = state;
-  return authReducer;
+  const { authReducer, postReducer } = state;
+  return { authReducer, postReducer };
 };
 
 export default connect(mapStateToProps, {
   deleteComment,
   deletePost,
+  addNewComment,
   doubtResolve,
 })(Posts);
