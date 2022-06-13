@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "../../assets/css/post.css"; //css
 import { toast, Toaster } from "react-hot-toast";
 import Tooltip from "@mui/material/Tooltip";
-import { addComment, removeComment, removePost, resolveDoubt } from "../../api";
+import { addComment, removeComment, resolveDoubt } from "../../api";
 import {
   deleteComment,
   deletePost,
@@ -46,18 +46,6 @@ function Posts(props) {
     }
   };
 
-  //function to handle delete post button
-
-  const handleDeleteButton = async (id) => {
-    let response = await removePost(id, user);
-    if (response.success) {
-      props.deletePost(id);
-      toast.success("post deleted ");
-    } else {
-      toast.error("cannot delete post ");
-    }
-  };
-
   //function to handle delete comment button
 
   const handleDeleteComment = async (commentId, postId, userId) => {
@@ -92,6 +80,7 @@ function Posts(props) {
   return (
     <>
       <Toaster position='top-center' reverseOrder={false} />
+
       <div className='post-container'>
         <div className='post-content'>
           <div
@@ -105,7 +94,7 @@ function Posts(props) {
               justifyContent: "flex-end",
             }}
           >
-            {props.data.user === user._id ? (
+            {props.data.elem.user === user._id ? (
               <Tooltip title='Delete Post' placement='left'>
                 <button
                   className='action-post-btn1'
@@ -120,7 +109,7 @@ function Posts(props) {
                     border: "solid 2px white",
                   }}
                   onClick={() => {
-                    handleDeleteButton(props.data._id);
+                    props.data.handleDeletePostPopup(props.data.elem._id);
                   }}
                 >
                   <svg
@@ -134,7 +123,8 @@ function Posts(props) {
               </Tooltip>
             ) : null}
 
-            {props.data.user === user._id && props.data.doubt === true ? (
+            {props.data.elem.user === user._id &&
+            props.data.elem.doubt === true ? (
               <button
                 className='action-post-btn2 '
                 style={{
@@ -150,7 +140,7 @@ function Posts(props) {
                   border: "solid 2px white",
                 }}
                 onClick={() => {
-                  handleDoubtButton(props.data._id);
+                  handleDoubtButton(props.data.elem._id);
                 }}
               >
                 <Tooltip title='Mark Resolved' placement='right'>
@@ -176,13 +166,13 @@ function Posts(props) {
               paddingLeft: "20px",
             }}
           >
-            {props.data.createdAt}
-            {props.data.content}
+            {props.data.elem.createdAt}
+            {props.data.elem.content}
           </div>
         </div>
 
         <div className='image-container'>
-          <img src={props.data.image} alt=''></img>
+          <img src={props.data.elem.image} alt=''></img>
         </div>
         <div className='comment-container'>
           <input
@@ -197,7 +187,7 @@ function Posts(props) {
             value={comment.content}
             onChange={handleChange}
           />
-          <input type='hidden' name='post' value={props.data._id} />
+          <input type='hidden' name='post' value={props.data.elem._id} />
           <button
             style={{
               height: "100%",
@@ -236,8 +226,8 @@ function Posts(props) {
         </button>
         {viewComment ? (
           <div>
-            {props.data.comments.length !== 0 ? (
-              props.data.comments
+            {props.data.elem.comments.length !== 0 ? (
+              props.data.elem.comments
                 .sort((a, b) => b.postedAt - a.postedAt)
                 .map((elem) => {
                   return (

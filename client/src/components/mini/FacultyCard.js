@@ -219,7 +219,6 @@ function FacultyCard() {
                         style={{
                           fontWeight: "800",
                           color: "#4f4e4e",
-                          // alignItems: "center",
                           justifyContent: "center",
                           fontSize: "10px",
                           display: "flex",

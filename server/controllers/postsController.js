@@ -27,6 +27,7 @@ module.exports.create = async function (req, res) {
 
     if (user) {
       let post = await Post.create({
+        title: req.body.post.title,
         content: req.body.post.content,
         user: req.body.post.user._id,
         doubt: req.body.post.doubt,

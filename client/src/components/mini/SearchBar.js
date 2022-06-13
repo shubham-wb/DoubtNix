@@ -4,7 +4,6 @@ import searchIco from "../../assets/images/search.svg";
 import close from "../../assets/images/close.svg";
 
 function SearchBar() {
-  let [search, setSearch] = useState("");
   let [value, setValue] = useState("");
 
   const handleChange = (event) => {
@@ -12,24 +11,25 @@ function SearchBar() {
     setValue((value = event.target.value));
   };
   return (
-    <div className="search-bar" style={Styles.searchBar}>
+    <div className='search-bar' style={Styles.searchBar}>
       <input
-        type="text"
+        type='text'
         value={value}
         onChange={handleChange}
         style={Styles.input}
-        placeholder="Search Courses ..."
+        placeholder='Search Courses ...'
       ></input>
-      {value != "" ? (
+      {value !== "" ? (
         <img
           style={Styles.svg}
           src={close}
           onClick={() => {
             setValue((value = ""));
           }}
+          alt=''
         ></img>
       ) : (
-        <img style={Styles.svg} src={searchIco}></img>
+        <img style={Styles.svg} src={searchIco} alt=''></img>
       )}
     </div>
   );

@@ -1,18 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { Button } from "@mui/material";
 import { addPost } from "../../api";
 import { addNewPost } from "../../actions/post";
+import addPic from "../../assets/images/add_pic.svg";
+import "../../assets/css/createPost.css"; //css
+import { TextField } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import close from "../../assets/images/close_white.svg";
 const CreatePost = (props) => {
   let [isChecked, setIsChecked] = useState(false);
   let { user } = props;
   let [post, setPost] = useState({
+    title: "",
     content: "",
     doubt: false,
     photo: "",
   });
 
+  useEffect(() => {
+    document.keyPress = function (evt) {
+      evt = evt || window.event;
+      console.log(evt);
+      if (evt.keyCode === 27) {
+        props.data();
+        return;
+      }
+      return () => {
+        document.removeEventListener("keypress");
+      };
+    };
+  }, []);
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -64,95 +83,136 @@ const CreatePost = (props) => {
     <>
       <Toaster position='top-center' reverseOrder={false} />
       <div className='create-post'>
-        <div
-          style={{
-            height: "20%",
-            width: "50%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+        <div className='create-post-wrapper'>
+          <div className='close-create-post' onClick={() => props.data()}>
+            <img src={close} alt='close'></img>
+          </div>
           <div
             style={{
+              height: "20%",
+              width: "100%",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "60%",
-              width: "60%",
-              borderRadius: "10px",
-              backgroundColor: "white",
+              alignIitems: "center",
+              justifyContent: "space-between",
             }}
           >
-            <span
-              style={{ color: "black", fontWeight: 700, marginRight: "20px" }}
-            >
-              Doubt
-            </span>
+            <div
+              style={{
+                marginTop: "15px",
 
-            <section className='model-2'>
-              <div className='checkbox'>
-                <input
-                  type='checkbox'
-                  value={post.doubt}
-                  name='doubt'
-                  checked={isChecked}
-                  onChange={handleSelect}
-                />
-                <label></label>
-              </div>
-            </section>
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "20px",
+                height: "60%",
+                width: "60%",
+                borderRadius: "10px",
+                backgroundColor: "white",
+              }}
+            >
+              <span
+                style={{ color: "black", fontWeight: 700, marginRight: "20px" }}
+              >
+                Doubt
+              </span>
+
+              <section className='model-2'>
+                <Tooltip title='doubt' placement='bottom'>
+                  <div className='checkbox'>
+                    <input
+                      type='checkbox'
+                      value={post.doubt}
+                      name='doubt'
+                      checked={isChecked}
+                      onChange={handleSelect}
+                    />
+                    <label></label>
+                  </div>
+                </Tooltip>
+              </section>
+            </div>
+            <Tooltip title='Add Picture' placement='bottom'>
+              <Button
+                variant='contained'
+                style={{
+                  position: "relative",
+                  background: "#ffffff",
+                  marginRight: "20px",
+                  marginTop: "15px",
+                  border: "solid 2px blue",
+                  textTransform: "inherit",
+                  width: "20%",
+                  height: "60%",
+                  justifyContent: "center",
+                  fontSize: "12px",
+                }}
+              >
+                <input id='post-img-up' type='file'></input>
+                <span
+                  style={{ width: "100%", position: "absolute", left: "0px" }}
+                >
+                  <img
+                    src={addPic}
+                    alt=''
+                    style={{ height: "25px", width: "25px" }}
+                  ></img>
+                </span>
+              </Button>
+            </Tooltip>
           </div>
-          <Button
-            variant='contained'
+          <div
             style={{
-              position: "relative",
-              background: "#0202a6",
-              textTransform: "inherit",
-              width: "40%",
-              height: "60%",
-              marginLeft: "10px",
-              justifyContent: "flex-start",
-              fontSize: "12px",
-            }}
-          >
-            <input id='post-img-up' type='file'></input>
-            <span style={{ width: "100%", position: "absolute", left: "0px" }}>
-              Add Image
-            </span>
-          </Button>
-        </div>
-        <textarea
-          type='text'
-          style={{
-            height: "50%",
-            width: "90%",
-            fontSize: "15px",
-            padding: "10px",
-            resize: "none",
-          }}
-          value={post.content}
-          name='content'
-          onChange={handleChange}
-        ></textarea>
-        <div classNameName='post-btn'>
-          <Button
-            variant='contained'
-            style={{
-              background: "#0202a6",
-              textTransform: "inherit",
-              width: "100px",
               height: "70%",
-              justifyContent: "center",
-              fontSize: "12px",
-              fontWeight: "600",
-              marginRight: "50px",
-            }}
-            onClick={() => {
-              handleSubmit();
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+
+              alignItems: "center",
             }}
           >
-            Submit
-          </Button>
+            <TextField
+              id='standard-basic'
+              label='Title'
+              variant='standard'
+              value={post.title}
+              InputLabelProps={{ shrink: true }}
+              name='title'
+              onChange={handleChange}
+              style={{ width: "90%" }}
+            />
+
+            <TextField
+              id='standard-basic'
+              label='Content'
+              variant='standard'
+              multiline
+              rows={4}
+              value={post.content}
+              InputLabelProps={{ shrink: true }}
+              name='content'
+              onChange={handleChange}
+              style={{ width: "90%", marginTop: "20px" }}
+            />
+          </div>
+          <div className='post-btn'>
+            <Button
+              variant='contained'
+              style={{
+                background: "orange",
+                color: "black",
+                textTransform: "inherit",
+                width: "100px",
+                height: "60%",
+                justifyContent: "center",
+                fontSize: "12px",
+                fontWeight: "600",
+              }}
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Submit
+            </Button>
+          </div>
         </div>
       </div>
     </>
