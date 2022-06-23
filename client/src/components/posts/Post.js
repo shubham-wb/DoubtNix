@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import "../../assets/css/post.css"; //css
 import { toast, Toaster } from "react-hot-toast";
@@ -10,7 +10,9 @@ import {
   doubtResolve,
   addNewComment,
 } from "../../actions/post";
-
+import dummyImg from "../../assets/images/doubt_dummy.jpg";
+import userImg from "../../assets/images/user_dummy.png";
+import { getTimeInterval } from "../../utils"; //to get readable time
 function Posts(props) {
   let { user } = props.authReducer;
   let [viewComment, setViewComment] = useState(false);
@@ -80,99 +82,99 @@ function Posts(props) {
   return (
     <>
       <Toaster position='top-center' reverseOrder={false} />
-
       <div className='post-container'>
         <div className='post-content'>
-          <div
-            className='post-btns'
-            style={{
-              paddingTop: "10px",
-              background: "transparent",
-              height: "50px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            {props.data.elem.user === user._id ? (
-              <Tooltip title='Delete Post' placement='left'>
+          <div className='post-detail-header'>
+            <div className='post-info'>
+              <div className='user-info'>
+                <img src={userImg} alt='user'></img>
+              </div>
+              <div className='post-time-info'>
+                <h5>{props.data.elem.username}</h5>
+                <h6>{getTimeInterval(props.data.elem.postedAt)}</h6>
+              </div>
+            </div>
+            <div className='post-btns'>
+              {props.data.elem.user === user._id ? (
+                <Tooltip title='Delete Post' placement='left'>
+                  <button
+                    className='action-post-btn1'
+                    style={{
+                      background: "whitesmoke",
+                      padding: "0px",
+                      height: "100%",
+                      width: "50px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "solid 2px white",
+                    }}
+                    onClick={() => {
+                      props.data.handleDeletePostPopup(props.data.elem._id);
+                    }}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='48'
+                      width='48'
+                    >
+                      <path d='M15 39H33Q33 39 33 39Q33 39 33 39V15H15V39Q15 39 15 39Q15 39 15 39ZM10.5 11V8H17.2L19.2 6H28.8L30.8 8H37.5V11ZM15 42Q13.8 42 12.9 41.1Q12 40.2 12 39V12H36V39Q36 40.2 35.1 41.1Q34.2 42 33 42ZM15 39H33Q33 39 33 39Q33 39 33 39H15Q15 39 15 39Q15 39 15 39Z' />
+                    </svg>
+                  </button>
+                </Tooltip>
+              ) : null}
+
+              {props.data.elem.user === user._id &&
+              props.data.elem.doubt === true ? (
                 <button
-                  className='action-post-btn1'
+                  className='action-post-btn2 '
                   style={{
-                    background: "whitesmoke",
+                    marginLeft: "5px",
                     padding: "0px",
-                    height: "100%",
-                    width: "50px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    height: "100%",
+                    width: "50px",
+                    background: "whitesmoke",
                     border: "solid 2px white",
                   }}
                   onClick={() => {
-                    props.data.handleDeletePostPopup(props.data.elem._id);
+                    handleDoubtButton(props.data.elem._id);
                   }}
                 >
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='48'
-                    width='48'
-                  >
-                    <path d='M15 39H33Q33 39 33 39Q33 39 33 39V15H15V39Q15 39 15 39Q15 39 15 39ZM10.5 11V8H17.2L19.2 6H28.8L30.8 8H37.5V11ZM15 42Q13.8 42 12.9 41.1Q12 40.2 12 39V12H36V39Q36 40.2 35.1 41.1Q34.2 42 33 42ZM15 39H33Q33 39 33 39Q33 39 33 39H15Q15 39 15 39Q15 39 15 39Z' />
-                  </svg>
+                  <Tooltip title='Mark Resolved' placement='right'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      height='48'
+                      width='48'
+                    >
+                      <path d='M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z' />
+                    </svg>
+                  </Tooltip>
                 </button>
-              </Tooltip>
-            ) : null}
-
-            {props.data.elem.user === user._id &&
-            props.data.elem.doubt === true ? (
-              <button
-                className='action-post-btn2 '
-                style={{
-                  marginLeft: "5px",
-                  padding: "0px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  width: "50px",
-
-                  background: "whitesmoke",
-                  border: "solid 2px white",
-                }}
-                onClick={() => {
-                  handleDoubtButton(props.data.elem._id);
-                }}
-              >
-                <Tooltip title='Mark Resolved' placement='right'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    height='48'
-                    width='48'
-                  >
-                    <path d='M21.05 33.1 35.2 18.95 32.9 16.7 21.05 28.55 15.05 22.55 12.8 24.8ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24Q24 24 24 24ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z' />
-                  </svg>
-                </Tooltip>
-              </button>
-            ) : null}
+              ) : null}
+            </div>
           </div>
           <div
             style={{
               textAlign: "left",
               textTransform: "capitalize",
-              height: "20%",
+              height: "max-content",
               width: "96%",
               color: "black",
               display: "flex",
+              flexDirection: "column",
               paddingLeft: "20px",
             }}
           >
-            {props.data.elem.createdAt}
-            {props.data.elem.content}
+            <h4>{props.data.elem.title}</h4>
+            <div>{props.data.elem.content}</div>
           </div>
         </div>
 
         <div className='image-container'>
-          <img src={props.data.elem.image} alt=''></img>
+          <img src={dummyImg} alt=''></img>
         </div>
         <div className='comment-container'>
           <input

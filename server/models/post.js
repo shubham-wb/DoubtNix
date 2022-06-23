@@ -30,7 +30,10 @@ const postSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-
+    username: {
+      type: String,
+      ref: "User",
+    },
     doubt: {
       type: Boolean,
       default: false,

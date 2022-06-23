@@ -5,7 +5,7 @@ import { logout } from "../../../actions/auth";
 import { connect } from "react-redux";
 function StudentAside(props) {
   let navigate = useNavigate();
-
+  console.log(props);
   return (
     <div
       className='aside-f-list'
@@ -99,8 +99,7 @@ function StudentAside(props) {
             id='hsdlkfjah'
             style={styles.li}
             onClick={() => {
-              props.authReducer.logout();
-
+              props.logout();
               navigate("/", { replace: true });
             }}
           >

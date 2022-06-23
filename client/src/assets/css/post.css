@@ -24,18 +24,76 @@
   height: 170px;
   width: 100%;
 }
+.post-detail-header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+}
 
-.post-content button {
+.post-info {
+  height: 100%;
+  width: 70%;
+  display: flex;
+}
+.user-info {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post-time-info {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.post-time-info h5,
+h6 {
+  margin: 0px;
+  padding: 0px;
+}
+
+.post-time-info h5 {
+  color: black;
+  font-size: 15px;
+  font-family: "verdana";
+  font-weight: 700;
+}
+.post-time-info h6 {
+  margin-top: 2px;
+  color: blue;
+  font-size: 8px;
+  font-family: "verdana";
+  font-weight: 400;
+}
+
+.post-btns {
+  height: 100%;
+  width: 30%;
+  padding-top: 10px;
+  background: transparent;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post-btns button {
   width: 20%;
 }
 .image-container {
   padding-left: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 190px;
   width: 100%;
 }
 img {
+  object-fit: contain;
+
   height: 80%;
   width: 80%;
 }

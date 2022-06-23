@@ -22,6 +22,7 @@ module.exports.read = async function (req, res) {
 };
 
 module.exports.create = async function (req, res) {
+  console.log(req.body);
   try {
     let user = await User.findById(req.body.post.user._id);
 
@@ -29,6 +30,7 @@ module.exports.create = async function (req, res) {
       let post = await Post.create({
         title: req.body.post.title,
         content: req.body.post.content,
+        username: req.body.post.user.name,
         user: req.body.post.user._id,
         doubt: req.body.post.doubt,
         postedAt: Date.now(),
