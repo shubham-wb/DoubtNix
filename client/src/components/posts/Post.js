@@ -12,6 +12,7 @@ import {
 } from "../../actions/post";
 
 function Posts(props) {
+  console.log(props);
   let { user } = props.authReducer;
   let [viewComment, setViewComment] = useState(false);
   let [comment, setComment] = useState({
@@ -83,6 +84,13 @@ function Posts(props) {
 
       <div className='post-container'>
         <div className='post-content'>
+          <div>
+            <h3 style={{ color: "black", textTransform: "capitalize" }}>
+              {props.data.elem.user.name}
+            </h3>
+
+            <div style={{ color: "black" }}>{props.data.elem.postedAt}</div>
+          </div>
           <div
             className='post-btns'
             style={{
@@ -94,7 +102,7 @@ function Posts(props) {
               justifyContent: "flex-end",
             }}
           >
-            {props.data.elem.user === user._id ? (
+            {props.data.elem.user._id === user._id ? (
               <Tooltip title='Delete Post' placement='left'>
                 <button
                   className='action-post-btn1'
@@ -123,7 +131,7 @@ function Posts(props) {
               </Tooltip>
             ) : null}
 
-            {props.data.elem.user === user._id &&
+            {props.data.elem.user._id === user._id &&
             props.data.elem.doubt === true ? (
               <button
                 className='action-post-btn2 '
@@ -155,6 +163,7 @@ function Posts(props) {
               </button>
             ) : null}
           </div>
+
           <div
             style={{
               textAlign: "left",
@@ -166,7 +175,6 @@ function Posts(props) {
               paddingLeft: "20px",
             }}
           >
-            {props.data.elem.createdAt}
             {props.data.elem.content}
           </div>
         </div>
@@ -250,13 +258,13 @@ function Posts(props) {
                       >
                         {elem.content}
                       </div>
-                      {elem.user === user._id ? (
+                      {elem.user._id === user._id ? (
                         <button
                           onClick={() => {
                             handleDeleteComment(
                               elem._id,
                               props.data._id,
-                              props.data.user
+                              props.data.user._id
                             );
                           }}
                         >

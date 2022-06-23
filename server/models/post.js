@@ -27,8 +27,7 @@ const postSchema = mongoose.Schema(
       type: String,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: Object,
     },
 
     doubt: {

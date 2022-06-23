@@ -26,7 +26,7 @@ function UserSignUp() {
   const handleSubmit = (event) => {
     let post = JSON.stringify(userDetails.userDetails);
     console.log(post);
-    const url = "http://localhost:8000/signup/user";
+    const url = "/api/signup/user";
     let xhr = new XMLHttpRequest();
 
     xhr.open("POST", url, true);
@@ -52,45 +52,45 @@ function UserSignUp() {
   };
 
   return (
-    <div className="f-signup-container">
-      <div className="f-signup-wrapper-container">
-        <div className="f-signup-form">
+    <div className='f-signup-container'>
+      <div className='f-signup-wrapper-container'>
+        <div className='f-signup-form'>
           <form>
             <input
-              type="text"
-              placeholder="Name"
-              name="name"
+              type='text'
+              placeholder='Name'
+              name='name'
               onChange={handleInputChange}
               value={userDetails.name}
             ></input>
             <input
-              type="text"
-              placeholder="Username"
-              name="username"
+              type='text'
+              placeholder='Username'
+              name='username'
               onChange={handleInputChange}
               value={userDetails.username}
             ></input>
 
             <input
-              type="email"
-              placeholder="Email"
-              name="email"
+              type='email'
+              placeholder='Email'
+              name='email'
               onChange={handleInputChange}
               value={userDetails.email}
             ></input>
 
             <input
-              type="password"
-              placeholder="Password"
-              name="password"
+              type='password'
+              placeholder='Password'
+              name='password'
               onChange={handleInputChange}
               value={userDetails.password}
             ></input>
 
             <input
-              type="confirm-password"
-              placeholder="Confirm Password"
-              name="confirmPassword"
+              type='confirm-password'
+              placeholder='Confirm Password'
+              name='confirmPassword'
               onChange={handleInputChange}
               value={userDetails.confirmPassword}
             ></input>
@@ -103,18 +103,18 @@ function UserSignUp() {
             </button>
             <hr />
             <a
-              className="btn btn-primary btn-lg"
-              href="/users/auth/google_oauth2"
+              className='btn btn-primary btn-lg'
+              href='/users/auth/google_oauth2'
             >
-              <i className="fa fa-google"></i> Login with Google
+              <i className='fa fa-google'></i> Login with Google
             </a>
-            <p className="text-justify text-muted margin-top-10">
+            <p className='text-justify text-muted margin-top-10'>
               Sign in / Sign up with your google account. We will never post
               anything on your behalf.
             </p>
           </form>
         </div>
-        <div className="f-signup-description"></div>
+        <div className='f-signup-description'></div>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ function CreateLesson() {
   const handleSubmit = (event) => {
     let data = JSON.stringify(lesson.lesson);
     console.log(data);
-    const url = `http://localhost:8000/courses/${id}/lesson/create`;
+    const url = `/api/courses/${id}/lesson/create`;
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");

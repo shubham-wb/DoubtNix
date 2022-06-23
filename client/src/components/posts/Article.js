@@ -24,7 +24,7 @@ function Article() {
   const handleSubmit = (event) => {
     let data = JSON.stringify(post.post);
     console.log(data);
-    const url = "http://localhost:8000/posts/create";
+    const url = "/api/posts/create";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -58,24 +58,24 @@ function Article() {
     setIsChecked(!isChecked);
   };
   return (
-    <div className="create-post">
-      <div className="post-pic">Upload photo</div>
+    <div className='create-post'>
+      <div className='post-pic'>Upload photo</div>
       <input
-        type="text"
+        type='text'
         value={post.content}
-        name="content"
+        name='content'
         onChange={handleChange}
       ></input>
-      <div className="post-btn">
+      <div className='post-btn'>
         <input
-          type="checkbox"
+          type='checkbox'
           value={post.doubt}
-          name="doubt"
+          name='doubt'
           checked={isChecked}
           onChange={handleSelect}
         ></input>
         <button
-          id="post-submit"
+          id='post-submit'
           onClick={(e) => {
             handleSubmit(e);
           }}

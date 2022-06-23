@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 function Courses(props) {
   const { courses } = props.courses;
-  console.log(props);
   return (
     <>
       <div

@@ -6,13 +6,10 @@ module.exports.read = async function (req, res) {
   try {
     let post = await Post.find({}).sort("-createdAt").populate("comments");
 
-    let all_users = await User.find({});
-
     if (post) {
       return res.json({
         data: post,
         message: "posts found succesfully",
-        users: all_users,
         success: true,
       });
     }
@@ -24,12 +21,15 @@ module.exports.read = async function (req, res) {
 module.exports.create = async function (req, res) {
   try {
     let user = await User.findById(req.body.post.user._id);
-
+    console.log(user);
     if (user) {
       let post = await Post.create({
         title: req.body.post.title,
         content: req.body.post.content,
-        user: req.body.post.user._id,
+        user: {
+          _id: user._id,
+          name: user.username,
+        },
         doubt: req.body.post.doubt,
         postedAt: Date.now(),
       });

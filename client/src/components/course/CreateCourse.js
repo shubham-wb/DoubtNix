@@ -54,8 +54,6 @@ function CreateCourse(props) {
         [name]: value,
       },
     }));
-
-    console.log(values);
   }
 
   const handleSubmit = async (event) => {

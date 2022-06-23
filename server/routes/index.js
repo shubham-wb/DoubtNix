@@ -2,9 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
-router.use("/signup", require("./signup"));
-router.use("/courses", require("./courses"));
-router.use("/posts", require("./posts"));
-router.use("/comments", require("./comment"));
-router.use("/users", require("./users"));
+router.use("api/signup", require("./signup"));
+router.use("api/courses", require("./courses"));
+router.use("api/posts", require("./posts"));
+router.use("api/comments", require("./comment"));
+router.use("api/users", require("./users"));
 module.exports = router;
